@@ -68,11 +68,7 @@ export default function Course() {
 
 
   return (
-    <div className="Course">
-      <h2>course </h2>
-
-
-
+    <div>
       <div className={classes.canvaStyle}>
       <Canvas flat linear>
       
