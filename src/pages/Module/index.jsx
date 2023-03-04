@@ -44,7 +44,6 @@ export default function Module(props) {
 
   console.log(currentModule)
   
-
   const optionsCam = useMemo(() => {
     return {x: 10, y: 10, z: 10}
   }, [])
