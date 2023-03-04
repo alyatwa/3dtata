@@ -48,9 +48,12 @@ gl_FragColor = vec4(finalColor, 1.0);
 
   export default function ModelGLB(props) {
     const refAxe = useRef()
-  const { isAnimationPlay} = useConfigurator();
+  //const { isAnimationPlay} = useConfigurator();
   const [isGPushClicked, setGPush] = useState(false);
+  const [isAnimationPlay, setAnimationPlay] = useState(false);
   
+
+
 const Current = (color) => {
   const ref = useRef()
   useFrame(({clock}) => {
@@ -60,14 +63,28 @@ const Current = (color) => {
       <shaderMaterial needsUpdate={true} name='ghg' uniforms={{uColor:{value: color.uColor.color}, uTime: { value: 0.0 }}}  vertexShader={vertexShader} fragmentShader={fragmentShader} ref={ref} />
   );
 };
-  useEffect(() => {
+  /*useEffect(() => {
     !isAnimationPlay && setGPush(false)
-  }, [isAnimationPlay])
+  }, [isAnimationPlay])*/
   
+  useEffect(() => {
+    props.makeEvent.current = makeEvent
+  }, [])
   useFrame( ({clock}) => {
     isGPushClicked ? refAxe.current.rotation.x += 0.08 : refAxe.current.rotation.x = 0
 })
 
+  const makeEvent = (e) => {
+    //console.log("===> ", e)
+    switch (e.event) {
+      case "playMainAnimation":
+        setAnimationPlay(e.value);
+      case "showPower":
+        console.log(e);
+      default:
+          return null;
+  }
+  }
   const handleGPush = () => {
     if (!isAnimationPlay)
     return;

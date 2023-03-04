@@ -33,7 +33,7 @@ export default function Module(props) {
  const [currentModule, setModule] = useState(null);
  (!currentModule && setModule(modules[0]))*/
  const params = useParams();
-  
+  const makeEvent = useRef(null)
   const camRef = useRef()
   const envMap = useEnvironment({path:"../../../public/"})
   
@@ -53,9 +53,6 @@ export default function Module(props) {
   }, [])
 
   const classes = useStyles();
-  const playAnimation = () => {
-    console.log("play animation")
-  };
 
    
    const cam = useControls('Camera', useMemo(() => {
@@ -147,7 +144,7 @@ export default function Module(props) {
       <orthographicCamera ref={camRef} attach="shadow-camera" fov={cam.fov} args={[-10, 10, -10, 10]} />
     </directionalLight>
     <Suspense fallback={null}>
-      <ModelGLB position={[model.x, model.y, model.z]}/>
+      <ModelGLB makeEvent={makeEvent} position={[model.x, model.y, model.z]}/>
       {/*<primitive object={gltf.scene} position={[model.x, model.y, model.z]}/>*/}
     </Suspense>
 
@@ -157,7 +154,7 @@ export default function Module(props) {
     </div>
 
     <div className={classes.panelStyle}>
-      <Panel metadata={currentModule} sendEvent={()=>playAnimation()} />
+      <Panel metadata={currentModule} sendEvent={(e) => makeEvent.current(e)} />
       </div>
     </div>
   );

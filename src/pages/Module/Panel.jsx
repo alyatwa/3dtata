@@ -44,10 +44,9 @@ const Panel = props => {
   const module = props.metadata
   //console.log(module)
     const Styles = useStyles();
-    const { isAnimationPlay, setAnimationPlay} =
-    useConfigurator();
+    //const { isAnimationPlay, setAnimationPlay} = useConfigurator();
     const [playFullscreen] = useSound(fullscreenSfx);
-    //const [isAnimationPlay, setAnimationPlay] = useState(false);
+    const [isAnimationPlay, setAnimationPlay] = useState(false);
     const [isPanelVisible, setPanelVisible] = useState(true);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [viewmodules, setViewmodules] = useState(false);
@@ -59,6 +58,12 @@ const Panel = props => {
 
     const handleAnimation = () => {
         setAnimationPlay(!isAnimationPlay)
+        props.sendEvent({
+        "id":"play_animation",
+        "type":"toggleBtn",
+        "event":"playMainAnimation",
+        "value": !isAnimationPlay 
+    })
       };
 
     const handlePanelVisible = () => {
@@ -76,11 +81,17 @@ const Panel = props => {
         return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
       }, []);
 
+      const updateControl = (object, newValue) =>{
+        let data = object
+        object.value = newValue;
+        props.sendEvent(data)
+      }
+
 
       const controlEvents = (control) => {
         switch (control.type) {
             case "Switch":
-                return <Switch key={control.id} onChange={()=>props.sendEvent()} label={control.label}/>;
+                return <Switch key={control.id} onChange={(ev)=> updateControl(control, ev.currentTarget.checked)} label={control.label}/>;
             case "Radio":
                 return <Radio value={control.value} key={control.id} label={control.label}/>;
             default:

@@ -14,9 +14,7 @@ export default function Routes() {
       <Route path="/" element={<Navigate to='/courses/classic-control' />} />
       <Route path="courses">
         <Route index element={<Courses courses={fake} />} />
-        <Route path=":courseId" element={<Module />}>
-          <Route path=":moduleId" element={<Module />}/>
-        </Route>
+        <Route path=":courseId" element={<Module />} />
         {/*<Route path=":moduleId" element={<Module />} />*/}
       </Route>
     </BaseRoutes>
