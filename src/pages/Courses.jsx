@@ -1,14 +1,25 @@
 import { Link } from "react-router-dom";
+import { Image } from "@fluentui/react-components";
+import * as React from "react";
+import fake from '../data/data'
 
 export default function Courses() {
+  //console.log(fake)
   return (
     <ul className="courses">
-      <li>
-        <Link to="course1">course 1</Link>
-      </li>
-      <li>
-        <Link to="course2">course 2</Link>
-      </li>
+      {fake.map((course)=>
+      <li key={course.id}>
+      <Link to={course.slug} state={course.modules}>
+      <Image
+    shape="rounded"
+    src={course.img}
+    height={200}
+    width={200}
+  />
+        <p>{course.title}</p>
+        </Link>
+    </li>
+      )}
     </ul>
   );
 }

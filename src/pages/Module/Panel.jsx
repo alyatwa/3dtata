@@ -1,16 +1,16 @@
 import { useRef, useState, useEffect } from 'react'
-import { Text, Switch, Divider, ToggleButton , makeStyles, shorthands  } from '@fluentui/react-components';
+import { Text, Switch, Radio, Divider, ToggleButton , makeStyles, shorthands  } from '@fluentui/react-components';
 import {
     Stack
   } from "@fluentui/react";
-  import {Card} from "@fluentui/react-card";
-  import { Maximize2, Minimize2, Minimize, Maximize, Pause, Play } from 'react-feather';
-  import useSound from 'use-sound';
-  import fullscreenSfx from '../../../public/sounds/Blow.mp3';
-  import { useConfigurator } from "../../contexts/Configurator";
+import {Card} from "@fluentui/react-card";
+import { Maximize2, Minimize2, Minimize, Maximize, Pause, Play } from 'react-feather';
+import useSound from 'use-sound';
+import fullscreenSfx from '../../../public/sounds/Blow.mp3';
+import { useConfigurator } from "../../contexts/Configurator";
 
 
-    const useStyles = makeStyles({
+const useStyles = makeStyles({
         stackStyles:{
             ...shorthands.padding("8px")
         },
@@ -41,7 +41,8 @@ import {
       })
 
 const Panel = props => {
-  //console.log(useConfigurator())
+  const module = props.metadata
+  //console.log(module)
     const Styles = useStyles();
     const { isAnimationPlay, setAnimationPlay} =
     useConfigurator();
@@ -74,7 +75,18 @@ const Panel = props => {
       
         return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
       }, []);
-      
+
+
+      const controlEvents = (control) => {
+        switch (control.type) {
+            case "Switch":
+                return <Switch key={control.id} onChange={()=>props.sendEvent()} label={control.label}/>;
+            case "Radio":
+                return <Radio value={control.value} key={control.id} label={control.label}/>;
+            default:
+                return null;
+        }
+    };
 
    //const classNames = getClassNames(styles, { theme });
    const stackTokens = { childrenGap: 6 };
@@ -92,18 +104,19 @@ const Panel = props => {
 
    
         <Stack enableScopedSelectors horizontalAlign="center" tokens={headerTokens}>
- <Text block={true} as='h2' weight="semibold" size={400} align='center'>Contactor Overview</Text>
+ <Text block={true} as='h2' weight="semibold" size={400} align='center'>{module.title}</Text>
     <ToggleButton checked={isAnimationPlay} size="large"  shape="circular" appearance={isAnimationPlay ? "outline" : "primary" }
     icon={isAnimationPlay ? <Pause size={20} /> : <Play size={20} />}
     onClick={() => handleAnimation()}>{isAnimationPlay ? 'Pause Animation' : 'Play Animation'}</ToggleButton>
 </Stack>
 
     <Stack enableScopedSelectors horizontalAlign="start">
-    <Switch label="This is a switch"/>
-    <Switch label="This is a switch"/>
+      {module.controls.map((control)=>
+      controlEvents(control)
+      )}
 </Stack>
 
-    <Text block={true} as='p' weight="regular" size={300} align='start'>Back in the good old days, the limits of CSS made even “simple” things like vertical centering a challenge, with some developers even relying on JavaScript solutions. It was fragile</Text>
+    <Text block={true} as='p' weight="regular" size={300} align='start'>{module.description}</Text>
     
     <div className={Styles.divider}>
     <Divider/>

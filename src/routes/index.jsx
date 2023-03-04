@@ -1,6 +1,6 @@
 import Home from "../pages/Home";
 import Course from "../pages/Course";
-import Lesson from "../pages/Lesson";
+import Module from "../pages/Module";
 import Courses from "../pages/Courses";
 import {useRoutes} from 'react-router-dom';
 
@@ -22,8 +22,8 @@ const mainRoutes = useRoutes([
         element: <Course />,
       },
        {
-        path: ":lessonId",
-        element: <Lesson />,
+        path: ":moduleId",
+        element: <Module />,
       },
     ],
   },

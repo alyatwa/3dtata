@@ -6,8 +6,7 @@ import * as THREE from "three";
 import { useControls, folder } from 'leva'
 import { makeStyles, mergeClasses } from '@fluentui/react-components';
 import Panel from './Panel'
-import fake from '../../data/data'
-
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles({
   canvaStyle: {
@@ -28,12 +27,14 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Course() {
-  console.log(fake)
-  const ModelGLB = lazy(()=> import("../../assets/module1"));
+export default function Module(props) {
+ const modules = useLocation().state;
+ const [currentModule, setModule] = useState(null);
+ (!currentModule && setModule(modules[0]))
+  const ModelGLB = lazy(()=> import(currentModule.moduleSource));
   const camRef = useRef()
   const envMap = useEnvironment({path:"../../../public/"})
-
+//console.log(modules)
   const optionsCam = useMemo(() => {
     return {x: 10, y: 10, z: 10}
   }, [])
@@ -45,11 +46,7 @@ export default function Course() {
   const playAnimation = () => {
     console.log("play animation")
   };
-  /*const gltf = useLoader(GLTFLoader, '../src/assets/C1.glb', loader => {
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('../src/assets/gltf/');
-    loader.setDRACOLoader(dracoLoader);
-   })*/
+
    
    const cam = useControls('Camera', useMemo(() => {
     return {Camera:folder({
@@ -71,21 +68,6 @@ export default function Course() {
       y: { value: -12, min: -15, max: 50, step: 1 },
       z: { value: 6, min: -15, max: 50, step: 1 }})}
   }, []))
-
-  /*const { CourseId } = useParams();
-  const navigate = useNavigate();
-
-  function handleGoToHome() {
-    navigate("/");
-  }
-
-  function handleGoBack() {
-    navigate(-1);
-  }
-
-  function handleGoForward() {
-    navigate(1);
-  }*/
 
   function Box(props) {
     // This reference gives us direct access to the THREE.Mesh object
@@ -142,7 +124,7 @@ export default function Course() {
   return (
     <div>
       <div className={classes.canvaStyle}>
-        <Suspense fallback={<>...</>}>
+      
       <Canvas flat linear>
       
       <color attach="background" args={['#f0f0f0']} />
@@ -150,25 +132,19 @@ export default function Course() {
     <directionalLight position={[-10, 10, 5]} shadow-mapSize={[256, 256]} shadow-bias={-0.0001} castShadow>
       <orthographicCamera ref={camRef} attach="shadow-camera" fov={cam.fov} args={[-10, 10, -10, 10]} />
     </directionalLight>
-    <Suspense fallback={<>...</>}>
+    <Suspense fallback={null}>
       <ModelGLB position={[model.x, model.y, model.z]}/>
       {/*<primitive object={gltf.scene} position={[model.x, model.y, model.z]}/>*/}
-   </Suspense>
+    </Suspense>
 
 
       <Controls />
-    </Canvas>
-     </Suspense>
+    </Canvas> 
     </div>
 
     <div className={classes.panelStyle}>
-      <Panel playAnimation={()=>playAnimation()} />
+      <Panel metadata={currentModule} sendEvent={()=>playAnimation()} />
       </div>
-      {/*<div className="actions">
-        <button onClick={handleGoBack}>Back</button>
-        <button onClick={handleGoForward}>forward</button>
-        <button onClick={handleGoToHome}>Go home</button>
-  </div>*/}
     </div>
   );
 }
