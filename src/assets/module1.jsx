@@ -2,7 +2,6 @@ import * as THREE from "three";
 import React, { useRef, useState, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF, shaderMaterial } from "@react-three/drei";
-import { useConfigurator } from "../contexts/Configurator";
 
 const uniforms = {
     uTime: { value: 0.0 },
@@ -48,7 +47,6 @@ gl_FragColor = vec4(finalColor, 1.0);
 
   export default function ModelGLB(props) {
     const refAxe = useRef()
-  //const { isAnimationPlay} = useConfigurator();
   const [isGPushClicked, setGPush] = useState(false);
   const [isAnimationPlay, setAnimationPlay] = useState(false);
   const [isPower, setPower] = useState(true);
@@ -77,7 +75,6 @@ const Current = (color) => {
         setAnimationPlay(e.value);
         break;
       case "showPower":
-        console.log(e)
         setPower(!e.value);
         break;
       case "showCurrent":
@@ -294,7 +291,7 @@ const Current = (color) => {
       />
       <mesh
         castShadow
-        receiveShadow visible={isPower}
+        receiveShadow visible={isCurrent}
         geometry={nodes.NurbsPath037.geometry}
         material={materials.GummyW}>
         {isAnimationPlay && <Current uColor={materials.GummyW} />}
@@ -344,16 +341,16 @@ const Current = (color) => {
       />
        <mesh
         castShadow
-        receiveShadow
+        receiveShadow  visible={isPower}
         geometry={nodes.NurbsPath027.geometry}
-                material={materials.blueW}>
+        material={materials.blueW}>
         {isAnimationPlay && <Current  uColor={materials.blueW} />}
         </mesh>
         <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isCurrent}
         geometry={nodes.apath.geometry}
-                material={materials.yellow}>
+        material={materials.yellow}>
         {isAnimationPlay && <Current  uColor={materials.yellow} />}
         </mesh>
       <mesh
@@ -401,69 +398,69 @@ const Current = (color) => {
       />
        <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isCurrent}
         geometry={nodes.NurbsPath033.geometry}
         material={materials.greenW}>
       {isGPushClicked && <Current  uColor={materials.greenW} />}
         </mesh>
       <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isPower}
         geometry={nodes.NurbsPath026.geometry}
         material={materials.redW}>
         {isAnimationPlay && <Current  uColor={materials.redW} />}
         </mesh>
       <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isPower}
         geometry={nodes.NurbsPath028.geometry}
         material={materials.yellow}>
         {isAnimationPlay && <Current  uColor={materials.yellow} />}
         </mesh>
         <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isCurrent}
         geometry={nodes.NurbsPath018.geometry}
-                material={materials.yellow}>
+        material={materials.yellow}>
         {isAnimationPlay && <Current  uColor={materials.yellow} />}
         </mesh>
       <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isPower}
         geometry={nodes.NurbsPath039.geometry}
         material={materials.blueW}>
-      {isAnimationPlay && <Current  uColor={materials.blueW} />}
+      {isAnimationPlay && <Current uColor={materials.blueW} />}
       </mesh>
         <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isCurrent}
         geometry={nodes.NurbsPath031.geometry}
         material={materials.yellow}>
         {isGPushClicked && <Current  uColor={materials.yellow} />}
         </mesh>
         <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isPower}
         geometry={nodes.NurbsPath022.geometry}
         material={materials.yellow}>
         {isGPushClicked && <Current  uColor={materials.yellow} />}
         </mesh>
         <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isCurrent}
         geometry={nodes.NurbsPath032.geometry}
         material={materials.greenW}>
         {isGPushClicked && <Current  uColor={materials.greenW} />}
         </mesh>
       <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isPower}
         geometry={nodes.NurbsPath034.geometry}
         material={materials["white cable"]}
       />
       <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isPower}
         geometry={nodes.motor_witrs001.geometry}
         material={materials.redW}>
       {isGPushClicked && <Current  uColor={materials.redW} />}
@@ -530,20 +527,20 @@ const Current = (color) => {
       />
       <mesh
         castShadow
-        receiveShadow
+        receiveShadow  visible={isCurrent}
         geometry={nodes.NurbsPath035.geometry}
         material={materials.yellow}>
         {isAnimationPlay && <Current  uColor={materials.yellow} />}
         </mesh>
         <mesh
-        castShadow
+        castShadow visible={isPower}
         receiveShadow
         geometry={nodes.NurbsPath030.geometry}
         material={materials.redW}>
         {isAnimationPlay && <Current  uColor={materials.redW} />}
         </mesh>
         <mesh
-        castShadow
+        castShadow visible={isPower}
         receiveShadow
         geometry={nodes.NurbsPath038.geometry}
         material={materials.yellow}
@@ -552,13 +549,13 @@ const Current = (color) => {
         </mesh>
       <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isPower}
         geometry={nodes.NurbsPath019.geometry}
         material={materials["white cable.002"]}
       />
       <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isPower}
         geometry={nodes.NurbsPath023.geometry}
         material={materials.blueW}>
         {isGPushClicked && <Current uColor={materials.blueW} />}

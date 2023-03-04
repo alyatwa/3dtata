@@ -6,14 +6,13 @@ const root = createRoot(container);
 //import "./index.css";
 import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 import App from "./App";
-import { ConfiguratorProvider } from "./contexts/Configurator";
 
 root.render(<React.StrictMode>
-<BrowserRouter>
-<ConfiguratorProvider>
+
 <FluentProvider theme={webLightTheme}>
+    <BrowserRouter>
 <App tab="home" />
-</FluentProvider>
-</ConfiguratorProvider>
 </BrowserRouter>
+</FluentProvider>
+
 </React.StrictMode>);

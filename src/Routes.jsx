@@ -1,7 +1,6 @@
 import { Route,Navigate, Routes as BaseRoutes } from "react-router-dom";
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
-import Course from "./pages/Course";
 import Module from "./pages/Module";
 import fake from './data/data'
 import { Spinner } from "@fluentui/react-components";

@@ -7,7 +7,6 @@ import {Card} from "@fluentui/react-card";
 import { Maximize2, Minimize2, Minimize, Maximize, Pause, Play } from 'react-feather';
 import useSound from 'use-sound';
 import fullscreenSfx from '../../../public/sounds/Blow.mp3';
-import { useConfigurator } from "../../contexts/Configurator";
 
 
 const useStyles = makeStyles({
@@ -44,7 +43,6 @@ const Panel = props => {
   const module = props.metadata
   //console.log(module)
     const Styles = useStyles();
-    //const { isAnimationPlay, setAnimationPlay} = useConfigurator();
     const [playFullscreen] = useSound(fullscreenSfx);
     const [isAnimationPlay, setAnimationPlay] = useState(false);
     const [isPanelVisible, setPanelVisible] = useState(true);
