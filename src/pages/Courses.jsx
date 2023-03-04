@@ -3,11 +3,11 @@ import { Image } from "@fluentui/react-components";
 import * as React from "react";
 import fake from '../data/data'
 
-export default function Courses() {
-  //console.log(fake)
+export default function Courses(props) {
+  //console.log(props)
   return (
     <ul className="courses">
-      {fake.map((course)=>
+      {props.courses.map((course)=>
       <li key={course.id}>
       <Link to={course.slug} state={course.modules}>
       <Image

@@ -1,12 +1,12 @@
-import { useParams, useNavigate } from "react-router";
 import React, { useRef, useEffect,lazy, useMemo, useState, Suspense } from 'react'
 import { useGLTF, AccumulativeShadows, RandomizedLight, OrbitControls, Environment, Lightformer, useEnvironment } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from "three";
-import { useControls, folder } from 'leva'
+import { useControls, folder, Leva}  from 'leva'
 import { makeStyles, mergeClasses } from '@fluentui/react-components';
 import Panel from './Panel'
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import fake from '../../data/data'
 
 const useStyles = makeStyles({
   canvaStyle: {
@@ -28,13 +28,23 @@ const useStyles = makeStyles({
 });
 
 export default function Module(props) {
- const modules = useLocation().state;
+ /*const modules = useLocation().state;
+ console.log(useLocation())
  const [currentModule, setModule] = useState(null);
- (!currentModule && setModule(modules[0]))
-  const ModelGLB = lazy(()=> import(currentModule.moduleSource));
+ (!currentModule && setModule(modules[0]))*/
+ const params = useParams();
+  
   const camRef = useRef()
   const envMap = useEnvironment({path:"../../../public/"})
-//console.log(modules)
+  
+  const course = fake.find(x => x.slug === params.courseId)
+  const [currentModule, setModule] = useState(null);
+ (!currentModule && setModule(course.modules[0]))
+ const ModelGLB = lazy(()=> import(currentModule.moduleSource));
+
+  console.log(currentModule)
+  
+
   const optionsCam = useMemo(() => {
     return {x: 10, y: 10, z: 10}
   }, [])
@@ -123,6 +133,10 @@ export default function Module(props) {
 
   return (
     <div>
+          <Leva
+        collapsed={true} // default = false, when true the GUI is collpased
+        hidden // default = false, when true the GUI is hidden
+      />
       <div className={classes.canvaStyle}>
       
       <Canvas flat linear>

@@ -72,20 +72,7 @@ export default function Course() {
       z: { value: 6, min: -15, max: 50, step: 1 }})}
   }, []))
 
-  /*const { CourseId } = useParams();
-  const navigate = useNavigate();
 
-  function handleGoToHome() {
-    navigate("/");
-  }
-
-  function handleGoBack() {
-    navigate(-1);
-  }
-
-  function handleGoForward() {
-    navigate(1);
-  }*/
 
   function Box(props) {
     // This reference gives us direct access to the THREE.Mesh object

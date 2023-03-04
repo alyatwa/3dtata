@@ -19,12 +19,13 @@ const mainRoutes = useRoutes([
       },
       {
         path: ":courseId",
-        element: <Course />,
-      },
+        element: <Module />,
+      }
+      /*,
        {
         path: ":moduleId",
         element: <Module />,
-      },
+      },*/
     ],
   },
 ]);
