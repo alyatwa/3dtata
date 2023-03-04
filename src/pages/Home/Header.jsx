@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack, classNamesFunction } from '@fluentui/react';
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, Outlet } from "react-router-dom";
 import { makeStyles, shorthands, Button, Link  } from '@fluentui/react-components';
 
 const useStyles = makeStyles({
@@ -44,6 +44,7 @@ const Header = ({ styles, theme }) => {
   const classes = useStyles();
 
   return (
+    <>
     <Stack
       horizontal
       horizontalAlign="end"
@@ -54,6 +55,8 @@ const Header = ({ styles, theme }) => {
   <Button appearance="transparent" size='medium'><RouterLink to="/courses" style={titleStyle}>Courses</RouterLink></Button>
   <Button appearance="transparent" size='medium'><RouterLink to="/feedback" style={titleStyle}>Feedback</RouterLink></Button>
     </Stack>
+    <Outlet />
+    </>
   );
 }
 

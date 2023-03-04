@@ -50,7 +50,7 @@ gl_FragColor = vec4(finalColor, 1.0);
   const [isGPushClicked, setGPush] = useState(false);
   const [isAnimationPlay, setAnimationPlay] = useState(false);
   const [isPower, setPower] = useState(true);
-  const [isCurrent, setCurrent] = useState(false);
+  const [isCurrent, setCurrent] = useState(true);
 
 const Current = (color) => {
   const ref = useRef()
