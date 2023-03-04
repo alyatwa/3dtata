@@ -1,4 +1,4 @@
-import routes from "./routes";
+
 import Routes from "./Routes";
 import Header from "./pages/Home/Header"
 
