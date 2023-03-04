@@ -51,8 +51,8 @@ gl_FragColor = vec4(finalColor, 1.0);
   //const { isAnimationPlay} = useConfigurator();
   const [isGPushClicked, setGPush] = useState(false);
   const [isAnimationPlay, setAnimationPlay] = useState(false);
-  
-
+  const [isPower, setPower] = useState(true);
+  const [isCurrent, setCurrent] = useState(false);
 
 const Current = (color) => {
   const ref = useRef()
@@ -63,9 +63,6 @@ const Current = (color) => {
       <shaderMaterial needsUpdate={true} name='ghg' uniforms={{uColor:{value: color.uColor.color}, uTime: { value: 0.0 }}}  vertexShader={vertexShader} fragmentShader={fragmentShader} ref={ref} />
   );
 };
-  /*useEffect(() => {
-    !isAnimationPlay && setGPush(false)
-  }, [isAnimationPlay])*/
   
   useEffect(() => {
     props.makeEvent.current = makeEvent
@@ -75,12 +72,17 @@ const Current = (color) => {
 })
 
   const makeEvent = (e) => {
-    //console.log("===> ", e)
     switch (e.event) {
       case "playMainAnimation":
         setAnimationPlay(e.value);
+        break;
       case "showPower":
-        console.log(e);
+        console.log(e)
+        setPower(!e.value);
+        break;
+      case "showCurrent":
+        setCurrent(!e.value);
+        break;
       default:
           return null;
   }
@@ -292,10 +294,10 @@ const Current = (color) => {
       />
       <mesh
         castShadow
-        receiveShadow
+        receiveShadow visible={isPower}
         geometry={nodes.NurbsPath037.geometry}
         material={materials.GummyW}>
-        {isAnimationPlay && <Current  uColor={materials.GummyW} />}
+        {isAnimationPlay && <Current uColor={materials.GummyW} />}
         </mesh>
       <mesh
         castShadow

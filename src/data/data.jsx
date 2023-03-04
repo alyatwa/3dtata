@@ -12,12 +12,12 @@ const fake = [{
                     "id":"jijiu",
                     "type":"Switch",
                     "event":"showPower",
-                "label": "Show Power wires",
+                "label": "Hide Power wires",
                 },{
                     "id":"tthkkl",
                     "type":"Switch",
                     "event":"showCurrent",
-                "label": "Show Current wires",
+                "label": "Hide Current wires",
                 }],
                 "description":" Three wire control is used to a much greater extent through out industry than two-wire control because of its flexibility. Pilot control devices such as push buttons, float switches, and limit switches can be mounted in re mote locations, whereas while the motor starter can be located close to the motor it controls or in a control cabinet with other control components",
                 "moduleSource":"../../assets/module1"
