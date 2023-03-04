@@ -35,7 +35,7 @@ export default function Module(props) {
  const params = useParams();
   const makeEvent = useRef(null)
   const camRef = useRef()
-  const envMap = useEnvironment({path:"../../../public/"})
+  //const envMap = useEnvironment({path:"../../../public/"})
   
   const course = fake.find(x => x.slug === params.courseId)
   const [currentModule, setModule] = useState(null);

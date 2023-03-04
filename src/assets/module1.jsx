@@ -73,6 +73,7 @@ const Current = (color) => {
     switch (e.event) {
       case "playMainAnimation":
         setAnimationPlay(e.value);
+        setGPush(false);
         break;
       case "showPower":
         setPower(!e.value);
@@ -401,7 +402,7 @@ const Current = (color) => {
         receiveShadow visible={isCurrent}
         geometry={nodes.NurbsPath033.geometry}
         material={materials.greenW}>
-      {isGPushClicked && <Current  uColor={materials.greenW} />}
+      {isGPushClicked && isAnimationPlay && <Current  uColor={materials.greenW} />}
         </mesh>
       <mesh
         castShadow
@@ -436,21 +437,21 @@ const Current = (color) => {
         receiveShadow visible={isCurrent}
         geometry={nodes.NurbsPath031.geometry}
         material={materials.yellow}>
-        {isGPushClicked && <Current  uColor={materials.yellow} />}
+        {isGPushClicked && isAnimationPlay && <Current  uColor={materials.yellow} />}
         </mesh>
         <mesh
         castShadow
         receiveShadow visible={isPower}
         geometry={nodes.NurbsPath022.geometry}
         material={materials.yellow}>
-        {isGPushClicked && <Current  uColor={materials.yellow} />}
+        {isGPushClicked && isAnimationPlay && <Current  uColor={materials.yellow} />}
         </mesh>
         <mesh
         castShadow
         receiveShadow visible={isCurrent}
         geometry={nodes.NurbsPath032.geometry}
         material={materials.greenW}>
-        {isGPushClicked && <Current  uColor={materials.greenW} />}
+        {isGPushClicked && isAnimationPlay && <Current  uColor={materials.greenW} />}
         </mesh>
       <mesh
         castShadow
@@ -463,7 +464,7 @@ const Current = (color) => {
         receiveShadow visible={isPower}
         geometry={nodes.motor_witrs001.geometry}
         material={materials.redW}>
-      {isGPushClicked && <Current  uColor={materials.redW} />}
+      {isGPushClicked && isAnimationPlay && <Current  uColor={materials.redW} />}
         </mesh>
       <mesh
         castShadow
@@ -558,7 +559,7 @@ const Current = (color) => {
         receiveShadow visible={isPower}
         geometry={nodes.NurbsPath023.geometry}
         material={materials.blueW}>
-        {isGPushClicked && <Current uColor={materials.blueW} />}
+        {isGPushClicked && isAnimationPlay && <Current uColor={materials.blueW} />}
         </mesh>
       <mesh
         castShadow

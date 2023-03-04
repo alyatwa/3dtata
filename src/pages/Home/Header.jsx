@@ -45,7 +45,7 @@ const Header = ({ styles, theme }) => {
 
   return (
     <>
-    <Stack
+    {/*<Stack
       horizontal
       horizontalAlign="end"
       className={classes.navStyle}
@@ -54,7 +54,7 @@ const Header = ({ styles, theme }) => {
   <Button appearance="transparent" size='medium'><RouterLink to="/" style={titleStyle}>Home</RouterLink></Button>
   <Button appearance="transparent" size='medium'><RouterLink to="/courses" style={titleStyle}>Courses</RouterLink></Button>
   <Button appearance="transparent" size='medium'><RouterLink to="/feedback" style={titleStyle}>Feedback</RouterLink></Button>
-    </Stack>
+    </Stack>*/}
     <Outlet />
     </>
   );
