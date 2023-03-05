@@ -42,7 +42,7 @@ export default function Module(props) {
   const [currentModule, setModule] = useState(null);
  (!currentModule && setModule(course.modules[0]))
 // const ModelGLB = lazy(() => import(currentModule.moduleSource+'.jsx'))
- const ModelGLB = lazy(()=> import(currentModule.moduleSource));
+ const ModelGLB = lazy(()=> import('../../assets/module1'));
 
   console.log(currentModule)
   
