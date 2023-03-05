@@ -11,6 +11,7 @@
   "dependencies": {
     "@fluentui/react": "^8.105.6",
     "@fluentui/react-components": "^9.15.0",
+    "@loadable/component": "^5.15.3",
     "@react-three/drei": "^9.56.24",
     "@react-three/fiber": "^8.11.0",
     "dat.gui": "^0.7.9",

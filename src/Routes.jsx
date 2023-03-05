@@ -6,7 +6,8 @@ import Courses from "./pages/Courses";
 import Header from './pages/Home/Header'
 import fake from './data/data'
 import { Spinner } from "@fluentui/react-components";
-const Module = React.lazy(() => import("./pages/Module"));
+//const Module = React.lazy(() => import("./pages/Module"));
+import Module from "./pages/Module";
 
 
 export default function Routes() {
