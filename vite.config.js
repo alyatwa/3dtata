@@ -4,14 +4,19 @@ import glsl from 'vite-plugin-glsl';
 import { dependencies } from './package.json';
 
 // https://vitejs.dev/config/
-function renderChunks(deps) {
-  let chunks = {};
-  Object.keys(deps).forEach((key) => {
-    if (['react', 'react-router-dom', 'react-dom'].includes(key)) return;
-    chunks[key] = [key];
-  });
-  return chunks;
-}
+
+
+const reactDeps = Object.keys(dependencies).filter(key => key === 'react' || key.startsWith('react-'))
+
+const manualChunks = {
+          vendor: reactDeps,
+          ...Object.keys(dependencies).reduce((chunks, name) => {
+            if (!reactDeps.includes(name)) {
+              chunks[name] = [name]
+            }
+            return chunks
+          }, {}),
+        }
 export default defineConfig({
   plugins: [react(),glsl()],
   build: {
@@ -20,7 +25,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-router-dom', 'react-dom'],
-          ...renderChunks(dependencies),
+          ...manualChunks(dependencies),
         },
       },
     },
