@@ -1,14 +1,30 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import glsl from 'vite-plugin-glsl';
+import * as path from "path";
+import rollupReplace from "@rollup/plugin-replace";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(),glsl()],
-  build: {
-    rollupOptions: {
-      entryFileNames: '[name].js',
-      chunkFileNames: '[name].js'
-    }
-  }
+  plugins: [react(),glsl(),rollupReplace({
+    preventAssignment: true,
+    values: {
+      __DEV__: JSON.stringify(true),
+      "process.env.NODE_ENV": JSON.stringify("development"),
+    },
+  })],
+  resolve: process.env.USE_SOURCE
+    ? {
+        alias: {
+          "react-router": path.resolve(
+            __dirname,
+            "../../packages/react-router/index.js"
+          ),
+          "react-router-dom": path.resolve(
+            __dirname,
+            "../../packages/react-router-dom/index.js"
+          ),
+        },
+      }
+    : {}
 })
