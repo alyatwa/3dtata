@@ -40,7 +40,7 @@ export default function Module(props) {
   const course = fake.find(x => x.slug === params.courseId)
   const [currentModule, setModule] = useState(null);
  (!currentModule && setModule(course.modules[0]))
- const ModelGLB = lazy(()=> import(currentModule.moduleSource));
+ const ModelGLB = lazy(()=> import(`../../assets/${currentModule.moduleSource}`));
 
   console.log(currentModule)
   
