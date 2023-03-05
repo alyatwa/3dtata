@@ -5,7 +5,6 @@ import * as THREE from "three";
 import { useControls, folder, Leva}  from 'leva'
 import { makeStyles, mergeClasses } from '@fluentui/react-components';
 import Panel from './Panel'
-//import {lazy} from '@loadable/component'
 import { useLocation, useParams } from "react-router-dom";
 import fake from '../../data/data'
 
@@ -41,8 +40,7 @@ export default function Module(props) {
   const course = fake.find(x => x.slug === params.courseId)
   const [currentModule, setModule] = useState(null);
  (!currentModule && setModule(course.modules[0]))
-// const ModelGLB = lazy(() => import(currentModule.moduleSource+'.jsx'))
- const ModelGLB = lazy(()=> import('../../assets/module1'));
+ const ModelGLB = lazy(()=> import(currentModule.moduleSource));
 
   console.log(currentModule)
   
