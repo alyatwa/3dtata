@@ -19,15 +19,24 @@ function renderChunks(deps) {
 export default defineConfig({
   plugins: [react(),glsl()],
   build: {
-    sourcemap: false,
+    assetsInlineLimit: 0,
+    minify: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: globalVendorPackages,
-          ...renderChunks(dependencies),
+        assetFileNames: (assetInfo) => {
+          var info = assetInfo.name.split(".");
+          var extType = info[info.length - 1];
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
+            extType = "img";
+          } else if (/woff|woff2/.test(extType)) {
+            extType = "css";
+          }
+          return `static/${extType}/[name]-[hash][extname]`;
         },
+        chunkFileNames: "static/js/[name]-[hash].js",
+        entryFileNames: "static/js/[name]-[hash].js",
       },
-    },
+    }
   }
 })
 
