@@ -1,22 +1,21 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import glsl from 'vite-plugin-glsl';
-import { dependencies } from './package.json';
+import { dependencies } from "./package.json";
+
+
+const globalVendorPackages = ["react", "react-dom", "react-router-dom"];
+
+function renderChunks(deps) {
+  let chunks = {};
+  Object.keys(deps).forEach((key) => {
+    if (globalVendorPackages.includes(key)) return;
+    chunks[key] = [key];
+  });
+  return chunks;
+}
 
 // https://vitejs.dev/config/
-
-
-const reactDeps = Object.keys(dependencies).filter(key => key === 'react' || key.startsWith('react-'))
-
-const manualChunks = {
-          vendor: reactDeps,
-          ...Object.keys(dependencies).reduce((chunks, name) => {
-            if (!reactDeps.includes(name)) {
-              chunks[name] = [name]
-            }
-            return chunks
-          }, {}),
-        }
 export default defineConfig({
   plugins: [react(),glsl()],
   build: {
@@ -24,11 +23,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-router-dom', 'react-dom'],
-          ...manualChunks(dependencies),
+          vendor: globalVendorPackages,
+          ...renderChunks(dependencies),
         },
       },
     },
   }
-  
 })
+
