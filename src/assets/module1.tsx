@@ -45,15 +45,15 @@ gl_FragColor = vec4(finalColor, 1.0);
 }
 `
 
-  export default function ModelGLB(props) {
-    const refAxe = useRef()
+  export default function ModelGLB(props: any) {
+    const refAxe: any = useRef()
   const [isGPushClicked, setGPush] = useState(false);
   const [isAnimationPlay, setAnimationPlay] = useState(false);
   const [isPower, setPower] = useState(true);
   const [isCurrent, setCurrent] = useState(true);
 
-const Current = (color) => {
-  const ref = useRef()
+const Current = (color: any) => {
+  const ref: any = useRef()
   useFrame(({clock}) => {
     ref.current.uniforms.uTime.value += 0.08
     })
@@ -69,7 +69,7 @@ const Current = (color) => {
     isGPushClicked ? refAxe.current.rotation.x += 0.08 : refAxe.current.rotation.x = 0
 })
 
-  const makeEvent = (e) => {
+  const makeEvent = (e: any) => {
     switch (e.event) {
       case "playMainAnimation":
         setAnimationPlay(e.value);
@@ -99,7 +99,7 @@ const Current = (color) => {
   };
   //console.log("isGPushClicked: ", isGPushClicked)
 
-  const { nodes, materials } = useGLTF("./../models/C1.glb");
+  const { nodes, materials } = useGLTF("./../models/C1.glb") as any;
   //return (<primitive object={gltf.scene} />)
   /*useMemo(() => scene.traverse(obj => {
     // traverse and mutate the scene here ...

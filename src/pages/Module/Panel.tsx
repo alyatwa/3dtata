@@ -4,6 +4,7 @@ import {
     Stack
   } from "@fluentui/react";
 import {Card} from "@fluentui/react-card";
+import Modules from './Modules'
 import { Maximize2, Minimize2, Minimize, Maximize, Pause, Play } from 'react-feather';
 import useSound from 'use-sound';
 import fullscreenSfx from '../../../public/sounds/Blow.mp3';
@@ -13,6 +14,21 @@ const useStyles = makeStyles({
         stackStyles:{
             ...shorthands.padding("8px")
         },
+        CarouselStyle:{
+          position: 'absolute',
+          bottom: '20px',
+          height: '150px',
+          marginRight: '20px',
+          marginLeft: '20px',
+          ...shorthands.padding('15px'),
+          //width: 'calc(100vw - 390px)',
+          width: '50%',
+          backgroundColor: 'rgba(255, 255, 255, 0.5)',
+          ...shorthands.borderRadius('10px'),
+      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+      backdropFilter: 'blur(6.5px)',
+      ...shorthands.border('1px solid rgba(255, 255, 255, 0.83))')
+        },
         controllerWrapper: {
             columnGap: "15px",
             display: "flex",
@@ -20,6 +36,13 @@ const useStyles = makeStyles({
             justifyContent: 'center'
           },
           panelWrapper:{
+            position: 'absolute',
+            width: '300px',
+            marginRight: '40px',
+            zIndex: 4,
+            top: '50%',
+            right: 0,
+            transform: 'translateY(-50%)',
             display: "flex",
             flexDirection: 'column',
             justifyContent: 'flex-start',
@@ -39,9 +62,8 @@ const useStyles = makeStyles({
         minHeight: "10px"}
       })
 
-const Panel = props => {
-  const module = props.metadata
-  //console.log(module)
+const Panel = (props: any) => {
+  const module: any = props.metadata
     const Styles = useStyles();
     const [playFullscreen] = useSound(fullscreenSfx);
     const [isAnimationPlay, setAnimationPlay] = useState(false);
@@ -50,7 +72,7 @@ const Panel = props => {
     const [viewmodules, setViewmodules] = useState(false);
 
     const handleFullscreen = () => {
-        playFullscreen
+        playFullscreen;
         (isFullscreen ? document.exitFullscreen() : document.body.requestFullscreen())
       };
 
@@ -67,6 +89,10 @@ const Panel = props => {
     const handlePanelVisible = () => {
         setPanelVisible(!isPanelVisible)
       };
+    
+    const handleViewModules = () => {
+        setViewmodules(!viewmodules)
+      };
 
     useEffect(() => {
         function onFullscreenChange() {
@@ -79,14 +105,14 @@ const Panel = props => {
         return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
       }, []);
 
-      const updateControl = (object, newValue) =>{
+      const updateControl = (object: any, newValue: any) =>{
         let data = object
         object.value = newValue;
         props.sendEvent(data)
       }
 
 
-      const controlEvents = (control) => {
+      const controlEvents = (control: any) => {
         switch (control.type) {
             case "Switch":
                 return <Switch key={control.id} onChange={(ev)=> updateControl(control, ev.currentTarget.checked)} label={control.label}/>;
@@ -97,11 +123,14 @@ const Panel = props => {
         }
     };
 
-   //const classNames = getClassNames(styles, { theme });
+    
    const stackTokens = { childrenGap: 6 };
    const headerTokens = { childrenGap: 10 };
   return (
-
+    <>
+    {viewmodules && <div className={Styles.CarouselStyle}>
+    <Modules data={props.course}/>
+    </div>}
     <div className={Styles.panelWrapper}>    
         <ToggleButton className={Styles.maximize} appearance={isPanelVisible ? "subtle" : "primary" } checked={isPanelVisible}
     icon={isPanelVisible ? <Minimize size={50} /> : <Maximize size={50} />}
@@ -120,7 +149,7 @@ const Panel = props => {
 </Stack>
 
     <Stack enableScopedSelectors horizontalAlign="start">
-      {module.controls.map((control)=>
+      {module.controls.map((control: any)=>
       controlEvents(control)
       )}
 </Stack>
@@ -131,7 +160,7 @@ const Panel = props => {
     <Divider/>
     </div>
     <div className={Styles.controllerWrapper}>
-    <ToggleButton appearance="transparent" onClick={() => setViewmodules(!viewmodules)}>View modules</ToggleButton>
+    <ToggleButton appearance={viewmodules ? "transparent" : "outline"} onClick={() => handleViewModules()}>{viewmodules ? 'Hide modules' : 'View modules'}</ToggleButton>
     <ToggleButton appearance={isFullscreen ? "outline" : "subtle" } checked={isFullscreen}
     icon={isFullscreen ? <Minimize2 size={20} /> : <Maximize2 size={20} />}
     onClick={() => handleFullscreen()}>Full screen</ToggleButton>
@@ -142,7 +171,7 @@ const Panel = props => {
 
     </div> 
          
-        
+    </>
   );
 }
 export default Panel;
