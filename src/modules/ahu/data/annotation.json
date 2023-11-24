@@ -1,0 +1,34 @@
+{
+	"DP_supply_sensor_1": {
+		"text": "DP Supply Sensor",
+		"position": "bottom"
+	},
+	"DP_supply_sensor_2": {
+		"text": "DP Supply Sensor",
+		"position": "bottom"
+	},
+	"DP_supply_sensor_3": {
+		"text": "DP Supply Sensor",
+		"position": "bottom"
+	},
+	"DP_supply_sensor_4": {
+		"text": "DP Supply Sensor",
+		"position": "bottom"
+	},
+	"co2_sensor": {
+		"text": "CO2 sensor",
+		"position": "top"
+	},
+	"air_temp_humidity_sensor_8": {
+		"text": "Air temp humidity sensor",
+		"position": "top"
+	},
+	"air_temp_humidity_sensor_2": {
+		"text": "Air temp humidity sensor",
+		"position": "top"
+	},
+	"DP_return_sensor_top": {
+		"text": "DP Return Sensor",
+		"position": "top"
+	}
+}

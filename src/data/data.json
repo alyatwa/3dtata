@@ -1,128 +1,169 @@
 [
-        {
-            "id": "jkhj-bhjh",
-            "slug":"classic-control",
-            "img":"https://1.bp.blogspot.com/-rs-VuYIDlsw/YBeaRwyeZrI/AAAAAAAAAZ4/9brdxACXc_cYWJt3YkvCEjwNlBUaIdwKwCLcBGAsYHQ/s632/Double%2BMotor%2BControl%2Bwith%2Bselective%2Bswitch%2Bwiring%2Bconnection%2Bdiagram.png",
-            "title": "Classic control",
-            "modules":[{
-                "id":"asdc1",
-                "slug":"module1",
-                "img":"https://1.bp.blogspot.com/-rs-VuYIDlsw/YBeaRwyeZrI/AAAAAAAAAZ4/9brdxACXc_cYWJt3YkvCEjwNlBUaIdwKwCLcBGAsYHQ/s632/Double%2BMotor%2BControl%2Bwith%2Bselective%2Bswitch%2Bwiring%2Bconnection%2Bdiagram.png",
-                "title": "Circuit 1",
-                "controls":[{
-                    "id":"jijiu",
-                    "type":"Switch",
-                    "event":"showPower",
-                "label": "Hide Power wires"
-                },{
-                    "id":"tthkkl",
-                    "type":"Switch",
-                    "event":"showCurrent",
-                "label": "Hide Current wires"
-                }],
-                "description":" Three wire control is used to a much greater extent through out industry than two-wire control because of its flexibility. Pilot control devices such as push buttons, float switches, and limit switches can be mounted in re mote locations, whereas while the motor starter can be located close to the motor it controls or in a control cabinet with other control components",
-                "moduleSource":"module1"
-            },
-            {
-                "id":"asdc2",
-                "title": "Circuit2",
-                "slug":"module2",
-                "img":"https://cdn3d.iconscout.com/3d/free/thumb/cryptocurrency-art-3678195-3061790@0.png",
-                "controls":[{
-                    "id":"jijiu",
-                    "type":"Switch",
-                    "event":"showPower",
-                "label": "Show Power wires"
-                },{
-                    "id":"tthkkl",
-                    "type":"Switch",
-                    "event":"showCurrent",
-                "label": "Show Current wires"
-                }],
-                "description":" Three wire control is used to a much greater extent through out industry than two-wire control because of its flexibility. Pilot control devices such as push buttons, float switches, and limit switches can be mounted in re mote locations, whereas while the motor starter can be located close to the motor it controls or in a control cabinet with other control components",
-                "moduleSource":"module2"
-            },
-            {
-                "id":"asdc3",
-                "title": "Circuit3",
-                "slug":"module3",
-                "img":"https://cdn3d.iconscout.com/3d/free/thumb/cryptocurrency-art-3678195-3061790@0.png",
-                "controls":[{
-                    "id":"jijiu",
-                    "type":"Switch",
-                    "event":"showPower",
-                "label": "Show Power wires"
-                },{
-                    "id":"tthkkl",
-                    "type":"Switch",
-                    "event":"showCurrent",
-                "label": "Show Current wires"
-                }],
-                "description":" Three wire control is used to a much greater extent through out industry than two-wire control because of its flexibility. Pilot control devices such as push buttons, float switches, and limit switches can be mounted in re mote locations, whereas while the motor starter can be located close to the motor it controls or in a control cabinet with other control components",
-                "moduleSource":"module3"
-            },
-            {
-                "id":"asdc4",
-                "title": "Circuit4",
-                "slug":"module4",
-                "img":"https://cdn3d.iconscout.com/3d/free/thumb/cryptocurrency-art-3678195-3061790@0.png",
-                "controls":[{
-                    "id":"koi",
-                    "type":"Switch",
-                    "event":"showPower",
-                "label": "Show Power wires"
-                },{
-                    "id":"tthkkl",
-                    "type":"Switch",
-                    "event":"showCurrent",
-                "label": "Show Current wires"
-                }],
-                "description":" Three wire control is used to a much greater extent through out industry than two-wire control because of its flexibility. Pilot control devices such as push buttons, float switches, and limit switches can be mounted in re mote locations, whereas while the motor starter can be located close to the motor it controls or in a control cabinet with other control components",
-                "moduleSource":"module4"
-            },
-            {
-                "id":"asdc5",
-                "title": "Circuit5",
-                "slug":"module5",
-                "img":"https://cdn3d.iconscout.com/3d/free/thumb/cryptocurrency-art-3678195-3061790@0.png",
-                "controls":[{
-                    "id":"koki",
-                    "type":"Switch",
-                    "event":"showPower",
-                "label": "Show Power wires"
-                },{
-                    "id":"tthkkkl",
-                    "type":"Switch",
-                    "event":"showCurrent",
-                "label": "Show Current wires"
-                }],
-                "description":" Three wire control is used to a much greater extent through out industry than two-wire control because of its flexibility. Pilot control devices such as push buttons, float switches, and limit switches can be mounted in re mote locations, whereas while the motor starter can be located close to the motor it controls or in a control cabinet with other control components",
-                "moduleSource":"module5"
-            }]
-        },
-        {
-            "id": "fgttbg",
-            "slug":"hvac-overview",
-            "img":"https://cdn3d.iconscout.com/3d/free/thumb/cryptocurrency-art-3678195-3061790@0.png",
-            "title": "HVAC",
-            "modules":[{
-                "id":"rrghvc",
-                "title": "AHU",
-                "img":"https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
-                "controls":[{
-                    "id":"gt",
-                    "type":"huj",
-                    "event":"showPower",
-                "label": "Show Power wires"
-                },{
-                    "id":"fgt",
-                    "type":"Switch",
-                    "event":"showCurrent",
-                "label": "Show Current wires"
-                }],
-                "description":" Three wire control is used to a much greater extent through out industry than two-wire control because of its flexibility. Pilot control devices such as push buttons, float switches, and limit switches can be mounted in re mote locations, whereas while the motor starter can be located close to the motor it controls or in a control cabinet with other control components",
-                "moduleSource":"../../assets/module2"
-            }]
-        }
+	{
+		"id": "jkhj-bhjh",
+		"slug": "classic-control",
+		"img": "https://1.bp.blogspot.com/-rs-VuYIDlsw/YBeaRwyeZrI/AAAAAAAAAZ4/9brdxACXc_cYWJt3YkvCEjwNlBUaIdwKwCLcBGAsYHQ/s632/Double%2BMotor%2BControl%2Bwith%2Bselective%2Bswitch%2Bwiring%2Bconnection%2Bdiagram.png",
+		"title": "Classic control",
+		"modules": [
+			{
+				"id": "asdc1",
+				"slug": "module1",
+				"img": "https://1.bp.blogspot.com/-rs-VuYIDlsw/YBeaRwyeZrI/AAAAAAAAAZ4/9brdxACXc_cYWJt3YkvCEjwNlBUaIdwKwCLcBGAsYHQ/s632/Double%2BMotor%2BControl%2Bwith%2Bselective%2Bswitch%2Bwiring%2Bconnection%2Bdiagram.png",
+				"title": "Circuit 1",
+				"controls": [
+					{
+						"id": "jijiu",
+						"type": "Switch",
+						"event": "showPower",
+						"label": "Hide Power wires"
+					},
+					{
+						"id": "tthkkl",
+						"type": "Switch",
+						"event": "showCurrent",
+						"label": "Hide Current wires"
+					}
+				],
+				"description": " Three wire control is used to a much greater extent through out industry than two-wire control because of its flexibility. Pilot control devices such as push buttons, float switches, and limit switches can be mounted in re mote locations, whereas while the motor starter can be located close to the motor it controls or in a control cabinet with other control components",
+				"moduleSource": "module1"
+			},
+			{
+				"id": "asdc2",
+				"title": "Circuit2",
+				"slug": "module2",
+				"img": "https://cdn3d.iconscout.com/3d/free/thumb/cryptocurrency-art-3678195-3061790@0.png",
+				"controls": [
+					{
+						"id": "jijiu",
+						"type": "Switch",
+						"event": "showPower",
+						"label": "Show Power wires"
+					},
+					{
+						"id": "tthkkl",
+						"type": "Switch",
+						"event": "showCurrent",
+						"label": "Show Current wires"
+					}
+				],
+				"description": " Three wire control is used to a much greater extent through out industry than two-wire control because of its flexibility. Pilot control devices such as push buttons, float switches, and limit switches can be mounted in re mote locations, whereas while the motor starter can be located close to the motor it controls or in a control cabinet with other control components",
+				"moduleSource": "module2"
+			},
+			{
+				"id": "asdc3",
+				"title": "Circuit3",
+				"slug": "module3",
+				"img": "https://cdn3d.iconscout.com/3d/free/thumb/cryptocurrency-art-3678195-3061790@0.png",
+				"controls": [
+					{
+						"id": "jijiu",
+						"type": "Switch",
+						"event": "showPower",
+						"label": "Show Power wires"
+					},
+					{
+						"id": "tthkkl",
+						"type": "Switch",
+						"event": "showCurrent",
+						"label": "Show Current wires"
+					}
+				],
+				"description": " Three wire control is used to a much greater extent through out industry than two-wire control because of its flexibility. Pilot control devices such as push buttons, float switches, and limit switches can be mounted in re mote locations, whereas while the motor starter can be located close to the motor it controls or in a control cabinet with other control components",
+				"moduleSource": "module3"
+			},
+			{
+				"id": "asdc4",
+				"title": "Circuit4",
+				"slug": "module4",
+				"img": "https://cdn3d.iconscout.com/3d/free/thumb/cryptocurrency-art-3678195-3061790@0.png",
+				"controls": [
+					{
+						"id": "koi",
+						"type": "Switch",
+						"event": "showPower",
+						"label": "Show Power wires"
+					},
+					{
+						"id": "tthkkl",
+						"type": "Switch",
+						"event": "showCurrent",
+						"label": "Show Current wires"
+					}
+				],
+				"description": " Three wire control is used to a much greater extent through out industry than two-wire control because of its flexibility. Pilot control devices such as push buttons, float switches, and limit switches can be mounted in re mote locations, whereas while the motor starter can be located close to the motor it controls or in a control cabinet with other control components",
+				"moduleSource": "module4"
+			},
+			{
+				"id": "asdc5",
+				"title": "Circuit5",
+				"slug": "module5",
+				"img": "https://cdn3d.iconscout.com/3d/free/thumb/cryptocurrency-art-3678195-3061790@0.png",
+				"controls": [
+					{
+						"id": "koki",
+						"type": "Switch",
+						"event": "showPower",
+						"label": "Show Power wires"
+					},
+					{
+						"id": "tthkkkl",
+						"type": "Switch",
+						"event": "showCurrent",
+						"label": "Show Current wires"
+					}
+				],
+				"description": " Three wire control is used to a much greater extent through out industry than two-wire control because of its flexibility. Pilot control devices such as push buttons, float switches, and limit switches can be mounted in re mote locations, whereas while the motor starter can be located close to the motor it controls or in a control cabinet with other control components",
+				"moduleSource": "module5"
+			}
+		]
+	},
+	{
+		"id": "fgttbg",
+		"slug": "hvac-overview",
+		"img": "https://cdn3d.iconscout.com/3d/free/thumb/cryptocurrency-art-3678195-3061790@0.png",
+		"title": "HVAC",
+		"modules": [
+			{
+				"id": "rrghvc",
+				"title": "AHU",
+				"camera":{
+					"target":[0,4,0]
+				},
+				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"controls": [
+					{
+						"id": "xds",
+						"type": "showOrHideParticles",
+						"event": "showOrHideParticles",
+						"label": "Show Particles"
+					}
+				],
+				"description": "An air handling unit is comprised of a filter, humidifier, blowers (fans) and heat exchanger (fins). Some air handling units are large enough for a person to enter, so engineers sometimes enter air handling units for maintenance.",
+				"moduleSource": "ahu"
+			}
+		]
+	},
+	{
+		"id": "rockets",
+		"slug": "flacon9-overview",
+		"img": "https://cdn3d.iconscout.com/3d/free/thumb/cryptocurrency-art-3678195-3061790@0.png",
+		"title": "Falcon 9",
+		"modules": [
+			{
+				"id": "uyygb",
+				"title": "Falcon 9",
+				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"controls": [
+					{
+						"id": "xds",
+						"type": "showOrHideParticles",
+						"event": "showOrHideParticles",
+						"label": "Show Particles"
+					}
+				],
+				"description": "An air handling unit is comprised of a filter, humidifier, blowers (fans) and heat exchanger (fins). Some air handling units are large enough for a person to enter, so engineers sometimes enter air handling units for maintenance.",
+				"moduleSource": "f9"
+			}
+		]
+	}
 ]
-    
