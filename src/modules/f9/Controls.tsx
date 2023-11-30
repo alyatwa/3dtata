@@ -2,6 +2,7 @@ import {
 	CameraShake,
 	OrbitControls,
 	OrthographicCamera,
+	PerspectiveCamera,
 } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useControls } from "leva";
@@ -9,7 +10,7 @@ import { Ref, useEffect, useRef } from "react";
 import * as THREE from "three";
 
 const Controls = () => {
-	const { gl, scene, size } = useThree();
+	const { gl, scene, size, camera: _camera } = useThree();
 
 	const camRef = useRef<THREE.OrthographicCamera>();
 
@@ -23,12 +24,12 @@ const Controls = () => {
 		beta: { value: 0, min: 10, max: 50000, step: 1000 },
 		gamma: { value: 0, min: 10, max: 50000, step: 1000 },
 		x: { value: 0, min: 0, max: 2000, step: 50 },
-		y: { value: 10000, min: 0, max: 50000, step: 1000 },
+		y: { value: 14000, min: 0, max: 50000, step: 1000 },
 		z: { value: 0, min: 0, max: 2000, step: 50 },
-		zoom: { value: 0.03, min: 0, max: 0.2, step: 0.01 },
+		zoom: { value: 0.02, min: 0, max: 0.2, step: 0.005 },
 		lockCamZ: { value: true },
 		//cameraPosition: { value: [0, 0, 5], step: 0.1 },
-	});
+	},{collapsed:true});
 
 	const camera = camRef.current as THREE.OrthographicCamera;
 	if (camRef.current) {
@@ -44,22 +45,23 @@ const Controls = () => {
 	}
 	return (
 		<>
-			<OrbitControls
-				onChange={() => console.log(camRef.current?.zoom ?? 0)}
+			<OrbitControls 
 				target={[cam.x, cam.y, cam.z]}
+				/* onChange={()=>console.log(_camera.zoom)} */
 				position={[cam.alpha, cam.beta, cam.gamma]}
 				args={[camera, gl.domElement]}
 				maxDistance={cam.maxDistance}
 				minDistance={cam.minDistance}
 				// vertical angle of the orbit
-				minPolarAngle={THREE.MathUtils.degToRad(0)}
-				maxPolarAngle={THREE.MathUtils.degToRad(180)}
+				minPolarAngle={THREE.MathUtils.degToRad(90)}
+				maxPolarAngle={THREE.MathUtils.degToRad(90)}
 				// horizontal angle of the orbit
-				minAzimuthAngle={THREE.MathUtils.degToRad(-180)}
-				maxAzimuthAngle={THREE.MathUtils.degToRad(180)}
+				minAzimuthAngle={THREE.MathUtils.degToRad(90)}
+				maxAzimuthAngle={THREE.MathUtils.degToRad(90)}
 			/>
-			<OrthographicCamera
+		 <OrthographicCamera
 				makeDefault
+				name="ortho"
 				top={window.innerHeight / 2}
 				bottom={-window.innerHeight / 2}
 				left={-window.innerWidth / 2}
@@ -68,7 +70,16 @@ const Controls = () => {
 				far={cam.far}
 				zoom={cam.zoom}
 				position={[cam.alpha, cam.beta, cam.gamma]}
-			/>
+			/> 
+			{/* <PerspectiveCamera	
+				makeDefault
+				name="perspective"
+				fov={cam.fov}
+				near={cam.near}
+				far={cam.far}
+				zoom={cam.zoom}
+				position={[cam.alpha, cam.beta, cam.gamma]}
+			/> */}
 		</>
 	);
 };

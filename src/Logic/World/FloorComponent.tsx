@@ -6,10 +6,10 @@ export default function FloorComponent() {
 		useControls(
 			"Floor",
 			{
-				topLeftColor: "#a2ebd7",
-				topRightColor: "#fceca5",
-				bottomLeftColor: "#a69eef",
-				bottomRightColor: "#ef9ad8",
+				topLeftColor: "#b7d9ff",
+				topRightColor: "#a4dffc",
+				bottomLeftColor: "#7b98cb",
+				bottomRightColor: "#c1c6e8",
 			},
 			{ collapsed: true, color: "#eac9e1" }
 		);
