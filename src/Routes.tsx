@@ -4,10 +4,10 @@ import Home from "./pages/Home";
 import Courses from "./pages/Courses";
 //import Module from "./pages/Module";
 import Header from './pages/Home/Header'
-import fake from './data/data'
-import { Spinner } from "@fluentui/react-components";
+import fake from './data/data' 
 //const Module = React.lazy(() => import("./pages/Module"));
 import Module from "./pages/Module";
+import { Spinner } from '@nextui-org/react';
 
 
 export default function Routes() {

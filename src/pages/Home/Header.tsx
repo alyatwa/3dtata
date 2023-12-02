@@ -1,14 +1,7 @@
-import React from "react";
-import { Stack } from "@fluentui/react";
-import { Link as RouterLink, Outlet } from "react-router-dom";
-import {
-	makeStyles,
-	shorthands,
-	Button,
-	Link,
-} from "@fluentui/react-components";
+import React from "react"; 
+import { Link as RouterLink, Outlet } from "react-router-dom"; 
 
-const useStyles = makeStyles({
+/* const useStyles = makeStyles({
 	navStyle: {
 		zIndex: 5,
 		position: "relative",
@@ -26,10 +19,10 @@ const useStyles = makeStyles({
 		textDecorationLine: "inherit",
 		textDecorationStyle: "inherit",
 	},
-});
+}); */
 
 const Header = () => {
-	const classes = useStyles();
+	//const classes = useStyles();
 
 	return (
 		<>

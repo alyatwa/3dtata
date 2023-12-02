@@ -155,11 +155,18 @@
 				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
 				"controls": [
 					{
-						"id": "xds",
-						"type": "showOrHideParticles",
-						"event": "showOrHideParticles",
-						"label": "Show Particles"
+						"id": "jjgncddfrd",
+						"type": "enableLoop",
+						"event": "enableLoop",
+						"label": "Enable Loop"
+					},
+					{
+						"id": "vgtyyh",
+						"type": "playAnimation",
+						"event": "playAnimation",
+						"label": "Play Animation"
 					}
+		
 				],
 				"description": "An air handling unit is comprised of a filter, humidifier, blowers (fans) and heat exchanger (fins). Some air handling units are large enough for a person to enter, so engineers sometimes enter air handling units for maintenance.",
 				"moduleSource": "f9"

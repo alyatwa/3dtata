@@ -6,28 +6,28 @@ import {
 	extend,
 } from "@react-three/fiber";
 import Resources from "../../Logic/Resources";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import Materials from "../../Logic/World/Materials";
 import * as THREE from "three";
 import FloorComponent from "../../Logic/World/FloorComponent";
-import { usePanel } from "../../context/panel-context";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Controls from "./Controls";
 import { Effects, Stats, useAnimations, useFBX } from "@react-three/drei";
 import FlameMaterial from "../../Logic/Materials/Flame";
-import { LevaInputs, useControls } from "leva";
-//import { EffectComposer, Bloom, ToneMapping, SelectiveBloom } from "@react-three/postprocessing";
+import { LevaInputs, folder, useControls } from "leva";
 import BloomFX from "../../Logic/Passes/Bloom";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import { state } from "../../context/panel-proxy";
+import { useSnapshot } from "valtio";
 
 extend({ EffectComposer, RenderPass, UnrealBloomPass });
 
 export default function ModelGLB(props: any) {
+	const { enableAnimationLoop, playAnimation } = useSnapshot(state);
 	const { camera, gl, scene: _scene, size } = useThree();
+	const currentScene = useRef<string>('animation');
+
 	const ref = useRef<any>();
 	const ref2 = useRef<any>();
 
@@ -40,9 +40,9 @@ export default function ModelGLB(props: any) {
 	let flameMat = new FlameMaterial();
 	let BloomF = new BloomFX(gl, _scene, _scene.getObjectByName("ortho"), size);
 
-	const flame = useControls(
-		"Bloom",
-		{
+	const [flame, set] = useControls(
+		"Main",
+		() => ({
 			intensity: { value: 0.5, min: 0, max: 5, step: 0.01 },
 			flameColor: { value: "red", type: LevaInputs.COLOR },
 			vec3: { value: [600, 250, 0], type: LevaInputs.VECTOR3D },
@@ -50,13 +50,14 @@ export default function ModelGLB(props: any) {
 			segment: { value: 45, min: 0, max: 500, type: LevaInputs.NUMBER },
 			radius: { value: 0.4, min: 0, max: 5, step: 0.01 },
 			rotateX: { value: -300, min: -360, max: 360, step: 10 },
-		},
+			x: { value: 0, min: 0, max: 2000, step: 50 },
+			y: { value: 14000, min: 0, max: 50000, step: 1000 },
+			z: { value: 0, min: 0, max: 2000, step: 50 },
+		}),
+
 		{ collapsed: true }
 	);
-	BloomF.config = {
-		bloomStrength: flame.intensity,
-		bloomRadius: flame.radius,
-	};
+
 	var rotation = new THREE.Euler(flame.rotateX, 0, 0);
 	useFrame((state, delta) => {
 		gl.clear();
@@ -66,15 +67,18 @@ export default function ModelGLB(props: any) {
 		flameMat.uniforms.time.value -= 0.008;
 		flameMat.uniforms.color4.value = new THREE.Vector3(...flame.vec3);
 		BloomF.render();
-		camera.layers.enable(0); 
-		mixer.update(0.01);
+		camera.layers.enable(0);
+		if (playAnimation) {
+			mixer.update(0.01);
+		}
 	}, 1);
+
 
 	resources.on("ready", () => {
 		scene.traverse((child) => {
 			if (child instanceof THREE.Mesh) {
 				if (child.name.includes("white_plastic_falcon9")) {
-					child.material = mats.items.plasticWhite;
+					child.material = mats.items.plasticWhite; 
 				}
 				if (child.name.includes("flame")) {
 					child.layers.set(BLOOM_SCENE);
@@ -123,40 +127,89 @@ export default function ModelGLB(props: any) {
 				}
 			}
 		});
-		//playAnimation()
+
 		console.log("ready");
 	});
 
 	useEffect(() => {
+		startAnimations();
+	}, [mixer, enableAnimationLoop]);
+
+	useEffect(() => {
+		console.log('currentScene: ', currentScene.current)
+		console.log('playAnimation: ', playAnimation)
+		if (currentScene.current == 'zoom') {
+			onFinish(true)
+			ref.current.position.z = -27000;
+			set({ y: 14000 });
+			camera.zoom = 0.02;
+			
+		} else{
+		//startAnimations()
+	}
+	}, [mixer, playAnimation]);
+
+	const startAnimations = () => {
+		mixer.stopAllAction();
 		_scene.getObjectByName("flame")!.visible = true;
 		scene.animations.forEach((clip) => {
 			const action = mixer.clipAction(clip);
-			action.setLoop(THREE.LoopOnce, 0);
+			action.reset();
+			action.setLoop(
+				enableAnimationLoop ? THREE.LoopRepeat : THREE.LoopOnce,
+				enableAnimationLoop ? 1000 : 0
+			);
 			action.clampWhenFinished = true;
 			action.play();
 		});
+		mixer.update(0.01);
 		return () => scene.animations.forEach((clip) => mixer.uncacheClip(clip));
-	}, [mixer]);
-
-	const onFinish = () => {
-		_scene.getObjectByName("flame")!.visible = false;
-		mixer.removeEventListener("finished", onFinish);
 	};
-	mixer.addEventListener("finished", onFinish);
 
+	const onFinish = (reset?: boolean) => {
+		_scene.getObjectByName("flame")!.visible = false;
+		if (!enableAnimationLoop || reset) {
+			state.playAnimation = false;
+			_scene.getObjectByName("flame")!.visible = true;
+			mixer.stopAllAction();
+		}
+		mixer.removeEventListener("finished", () => onFinish());
+	};
+
+	mixer.addEventListener("finished", () => onFinish());
+	const onModelClick = () => {
+		currentScene.current =='zoom'? currentScene.current = 'animation': currentScene.current ='zoom';
+		onFinish(true);
+		state.playAnimation = false;
+		if (currentScene.current == 'zoom') {
+			ref.current.position.z = 0;
+			set({ y: 4500 });
+			camera.zoom = 0.07;
+		} else {
+			ref.current.position.z = -27000;
+			set({ y: 14000 });
+			camera.zoom = 0.02;
+			startAnimations()
+		}
+	};
 	return (
 		<>
-			<primitive object={new THREE.AxesHelper(2000)} />
 			<primitive
+				onPointerOver={() => (document.body.style.cursor = "pointer")}
+				onPointerOut={() => (document.body.style.cursor = "auto")}
+				onClick={() => {
+					onModelClick();
+				}}
 				ref={ref}
 				object={scene}
 				scale={0.1}
 				position={[0, 0, -27000]}
 				rotation={[0, Math.PI / 2, 0]}
 			></primitive>
-			<Controls />
+			<Controls target={new THREE.Vector3(flame.x, flame.y, flame.z)} />
 			<FloorComponent />
-			<Stats />
+			{/* <primitive object={new THREE.AxesHelper(2000)} />
+				<Stats /> */}
 		</>
 	);
 }

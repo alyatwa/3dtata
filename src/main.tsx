@@ -4,19 +4,19 @@ import { BrowserRouter } from "react-router-dom";
 const root = createRoot(document.getElementById("app") as HTMLElement);
 //import "./index.css";
 import "./three-elements";
-import { FluentProvider, webLightTheme } from "@fluentui/react-components";
 import App from "./App";
 import "tailwindcss/tailwind.css";
+import {NextUIProvider} from '@nextui-org/react'
 import { PanelProvider } from "./context/panel-context";
 
 root.render(
 	<React.StrictMode>
-		<FluentProvider theme={webLightTheme}>
+		<NextUIProvider>
 			<BrowserRouter>
 				<PanelProvider>
 					<App />
 				</PanelProvider>
 			</BrowserRouter>
-		</FluentProvider>
+		</NextUIProvider>
 	</React.StrictMode>
 );

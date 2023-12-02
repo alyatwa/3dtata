@@ -12,10 +12,7 @@ import {
 } from "@react-three/drei";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { useControls, folder, Leva } from "leva"; 
-import {
-	makeStyles,
-} from "@fluentui/react-components"; 
+import { useControls, folder, Leva } from "leva";  
 
 import Panel from "../../components/Panel";
 import { useParams } from "react-router-dom";
@@ -26,7 +23,7 @@ import { usePanel } from "../../context/panel-context";
 extend({ OrbitControls });
  
 
-const useStyles = makeStyles({
+/* const useStyles = makeStyles({
 	canvaStyle: {
 		width: "100%",
 		height: "100%",
@@ -34,7 +31,7 @@ const useStyles = makeStyles({
 		top: 0,
 		left: 0,
 	},
-});
+}); */
 
 export default function Module() {
 	const { viewParticles } = usePanel();
@@ -42,9 +39,9 @@ export default function Module() {
  console.log(useLocation())
  const [currentModule, setModule] = useState(null);
  (!currentModule && setModule(modules[0]))*/
-	const classes = useStyles();
+	//const classes = useStyles();
 	const params = useParams();
-	const makeEvent: any = useRef(null);
+	//const makeEvent: any = useRef(null);
 	const course = fake.find((x) => x.slug === params.courseId);
 	const [currentModule, setModule] = useState<any | null>(null);
 	!currentModule && setModule(course!.modules[0]);
@@ -76,7 +73,7 @@ export default function Module() {
 				hidden={false} // default = false, when true the GUI is hidden
 			/> */}
 
-			<div className={classes.canvaStyle}>
+			<div className="w-full h-full absolute t-0 l-0">
 				<Canvas 
 					gl={{ 
 						outputEncoding: THREE.LinearEncoding,
@@ -89,7 +86,7 @@ export default function Module() {
 				>
 					<color attach="background" args={[0xffffff]} />
 					<Suspense fallback={null}>
-						<ModelGLB receiveShadow castShadow makeEvent={makeEvent} />
+						<ModelGLB receiveShadow castShadow />
 					</Suspense>
 
 					{/* 	<Effect /> */}
@@ -106,7 +103,6 @@ export default function Module() {
 				<Panel
 					metadata={currentModule}
 					course={course}
-					sendEvent={(e: any) => makeEvent.current(e)}
 				/>
 			</div>
 		</div>

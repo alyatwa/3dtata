@@ -9,7 +9,7 @@ import { useControls } from "leva";
 import { Ref, useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const Controls = () => {
+const Controls = ({target}:{target: THREE.Vector3}) => {
 	const { gl, scene, size, camera: _camera } = useThree();
 
 	const camRef = useRef<THREE.OrthographicCamera>();
@@ -23,9 +23,7 @@ const Controls = () => {
 		alpha: { value: 25000, min: 10, max: 50000, step: 1000 },
 		beta: { value: 0, min: 10, max: 50000, step: 1000 },
 		gamma: { value: 0, min: 10, max: 50000, step: 1000 },
-		x: { value: 0, min: 0, max: 2000, step: 50 },
-		y: { value: 14000, min: 0, max: 50000, step: 1000 },
-		z: { value: 0, min: 0, max: 2000, step: 50 },
+		
 		zoom: { value: 0.02, min: 0, max: 0.2, step: 0.005 },
 		lockCamZ: { value: true },
 		//cameraPosition: { value: [0, 0, 5], step: 0.1 },
@@ -34,7 +32,7 @@ const Controls = () => {
 	const camera = camRef.current as THREE.OrthographicCamera;
 	if (camRef.current) {
 		console.log(camera);
-		camera.lookAt(new THREE.Vector3(cam.x, cam.y, cam.z));
+		camera.lookAt(target);
 		camera.position.x = cam.alpha;
 		camera.position.y = cam.beta;
 		camera.position.z = cam.lockCamZ ? 0 : cam.gamma;
@@ -46,7 +44,7 @@ const Controls = () => {
 	return (
 		<>
 			<OrbitControls 
-				target={[cam.x, cam.y, cam.z]}
+				target={target as any}
 				/* onChange={()=>console.log(_camera.zoom)} */
 				position={[cam.alpha, cam.beta, cam.gamma]}
 				args={[camera, gl.domElement]}

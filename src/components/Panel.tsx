@@ -1,15 +1,4 @@
 import { useRef, useState, useEffect, useContext } from "react";
-import {
-	Text,
-	Switch,
-	Radio,
-	Divider,
-	ToggleButton,
-	makeStyles,
-	shorthands,
-} from "@fluentui/react-components";
-import { Stack } from "@fluentui/react";
-import { Card } from "@fluentui/react-card";
 import Modules from "../pages/Module/Modules";
 import {
 	Maximize2,
@@ -22,69 +11,28 @@ import {
 import useSound from "use-sound";
 import fullscreenSfx from "/sounds/Blow.mp3";
 import { usePanel } from "../context/panel-context";
+import {
+	Button,
+	Card,
+	CardBody,
+	CardFooter,
+	Divider,
+	Radio,
+	Switch,
+} from "@nextui-org/react";
 
-const useStyles = makeStyles({
-	stackStyles: {
-		...shorthands.padding("8px"),
-	},
-	CarouselStyle: {
-		position: "absolute",
-		bottom: "20px",
-		height: "150px",
-		marginRight: "20px",
-		marginLeft: "20px",
-		...shorthands.padding("15px"),
-		//width: 'calc(100vw - 390px)',
-		width: "50%",
-		backgroundColor: "rgba(255, 255, 255, 0.5)",
-		...shorthands.borderRadius("10px"),
-		boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-		backdropFilter: "blur(6.5px)",
-		...shorthands.border("1px solid rgba(255, 255, 255, 0.83))"),
-	},
-	controllerWrapper: {
-		columnGap: "15px",
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	panelWrapper: {
-		position: "absolute",
-		width: "300px",
-		marginRight: "40px",
-		zIndex: 4,
-		top: "50%",
-		right: 0,
-		transform: "translateY(-50%)",
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "flex-start",
-		alignItems: "flex-end",
-	},
-	maximize: {
-		top: "20px",
-		left: "20px",
-		zIndex: 1,
-		position: "relative",
-	},
-	divider: {
-		display: "flex",
-		flexDirection: "column",
-		alignItems: "center",
-		justifyItems: "center",
-		minHeight: "10px",
-	},
-});
+import { useSnapshot } from "valtio";
+import { state } from "../context/panel-proxy";
 
 const Panel = (props: any) => {
-	const { sendAction, viewParticles, setViewParticles } = usePanel();
+	//const { setPlayAnimation, playAnimation, viewParticles, setViewParticles, setEnableAnimationLoop, enableAnimationLoop } = usePanel();
+	const {enableAnimationLoop, playAnimation}= useSnapshot(state)
 	const module: any = props.metadata;
-	const Styles = useStyles();
 	const [play] = useSound(fullscreenSfx);
-	const [isAnimationPlay, setAnimationPlay] = useState(false);
+	//const [isAnimationPlay, setAnimationPlay] = useState(false);
 	const [isPanelVisible, setPanelVisible] = useState(false);
 	const [isFullscreen, setIsFullscreen] = useState(false);
-	const [viewmodules, setViewmodules] = useState(false);
+	const [viewModules, setViewModules] = useState(false);
 
 	const handleFullscreen = () => {
 		play();
@@ -93,7 +41,7 @@ const Panel = (props: any) => {
 			: document.body.requestFullscreen();
 	};
 
-	const handleAnimation = () => {
+	/* const handleAnimation = () => {
 		setAnimationPlay(!isAnimationPlay);
 		props.sendEvent({
 			id: "play_animation",
@@ -101,14 +49,14 @@ const Panel = (props: any) => {
 			event: "playMainAnimation",
 			value: !isAnimationPlay,
 		});
-	};
+	}; */
 
 	const handlePanelVisible = () => {
 		setPanelVisible(!isPanelVisible);
 	};
 
 	const handleViewModules = () => {
-		setViewmodules(!viewmodules);
+		setViewModules(!viewModules);
 	};
 
 	useEffect(() => {
@@ -122,142 +70,129 @@ const Panel = (props: any) => {
 			document.removeEventListener("fullscreenchange", onFullscreenChange);
 	}, []);
 
-	const updateControl = (object: any, newValue: any) => {
+/* 	const updateControl = (object: any, newValue: any) => {
 		let data = object;
 		object.value = newValue;
 		props.sendEvent(data);
+	}; */
+	type Control = {
+		id: string;
+		label: string;
+		value: string;
+		type: string;
 	};
-type Control = {
-	id:string,
-	label:string,
-	value:string,
-	type: 'Switch' | 'showOrHideParticles' | 'Radio',
-}
 	const controlEvents = (control: Control) => {
 		switch (control.type) {
-			case "Switch":
+			/* case "Switch":
 				return (
-					<Switch
+					<Switch size="sm"
+						defaultSelected
 						key={control.id}
 						onChange={(ev) => updateControl(control, ev.currentTarget.checked)}
-						label={control.label}
-					/>
-				);
-			case "showOrHideParticles":
+					>
+						{control.label}
+					</Switch>
+				); */
+			case "enableLoop":
 					return (
-						<Switch
+						<Switch size="sm"
+							defaultSelected={enableAnimationLoop as boolean}
+							isSelected={enableAnimationLoop as boolean}
 							key={control.id}
-							checked={viewParticles}
-							onChange={(ev) => setViewParticles(ev.currentTarget.checked)}
-							label={control.label}
-						/>
+							onChange={(ev) => state.enableAnimationLoop=ev.currentTarget.checked}
+						>
+							{control.label}
+						</Switch>
 					);
+			/* case "showOrHideParticles":
+				return (
+					<Switch size="sm"
+						defaultSelected={viewParticles}
+						isSelected={viewParticles}
+						key={control.id}
+						onChange={(ev) => setViewParticles(ev.currentTarget.checked)}
+					>
+						{control.label}
+					</Switch>
+				); */
 			case "Radio":
 				return (
-					<Radio value={control.value} key={control.id} label={control.label} />
+					<Radio size="sm" key={control.id} value={control.value}>
+						{control.label}
+					</Radio>
 				);
 			default:
 				return null;
 		}
 	};
-
-	const stackTokens = { childrenGap: 6 };
-	const headerTokens = { childrenGap: 10 };
+ 
 	return (
 		<>
-			{viewmodules && (
-				<div className={Styles.CarouselStyle}>
-					<Modules data={props.course} />
+			{viewModules && (
+				<div className="hidden">{/* <Modules data={props.course} /> */}</div>
+			)} 
+			<div className="absolute top-1/2 transform -translate-y-1/2 right-0 w-[300px] mr-[15px] z-4 ">
+				<div className="flex justify-end">
+					<Button
+						isIconOnly
+						radius="full"
+						color="primary"
+						disableRipple
+						size="md"
+						className="p-2"
+						variant="solid"
+						onClick={() => handlePanelVisible()}
+					>
+						{isPanelVisible ? <Minimize size={40} /> : <Maximize size={40} />}
+					</Button>
 				</div>
-			)}
-			<div className={Styles.panelWrapper}>
-				<ToggleButton
-					className={Styles.maximize}
-					appearance={isPanelVisible ? "subtle" : "primary"}
-					checked={isPanelVisible}
-					icon={
-						isPanelVisible ? <Minimize size={50} /> : <Maximize size={50} />
-					}
-					onClick={() => handlePanelVisible()}
-					size="large"
-					shape="circular"
-				/>
-
 				{isPanelVisible && (
-					<Card>
-						<Stack
-							enableScopedSelectors
-							className={Styles.stackStyles}
-							tokens={stackTokens}
-						>
-							<Stack
-								enableScopedSelectors
-								horizontalAlign="center"
-								tokens={headerTokens}
+					<Card
+						isBlurred
+						className="border-none bg-background/60 dark:bg-default-100/50 mt-2 max-w-[610px]"
+						shadow="sm"
+					>
+						<CardBody className="flex gap-2 flex-col">
+							<p className="text-lg text-black/80 text-center">{module.title}</p>
+							<div className="flex justify-center items-center "> 
+							<Button 
+								isIconOnly
+								radius="full"
+								color="primary"
+								disableRipple
+								size="md"
+								className="p-2"
+								variant={playAnimation ? "bordered" : "solid"}
+								onClick={() => {state.playAnimation = !playAnimation as boolean}}
 							>
-								<Text
-									block={true}
-									as="h2"
-									weight="semibold"
-									size={400}
-									align="center"
-								>
-									{module.title}
-								</Text>
-								<ToggleButton
-									checked={isAnimationPlay}
-									size="large"
-									shape="circular"
-									appearance={isAnimationPlay ? "outline" : "primary"}
-									icon={
-										isAnimationPlay ? <Pause size={20} /> : <Play size={20} />
-									}
-									onClick={() => handleAnimation()}
-								>
-									{isAnimationPlay ? "Pause Animation" : "Play Animation"}
-								</ToggleButton>
-							</Stack>
+								{playAnimation ? <Pause size={20} /> : <Play size={20} />}
+							</Button>
+							 </div>
 
-							<Stack enableScopedSelectors horizontalAlign="start">
-								{module.controls.map((control: any) => controlEvents(control))}
-							</Stack>
-
-							<Text
-								block={true}
-								as="p"
-								weight="regular"
-								size={300}
-								align="start"
+							{module.controls.map((control: any) => controlEvents(control))}
+						</CardBody>
+						<Divider className="my-2" />
+						<CardFooter className="justify-between before:bg-white/10  overflow-hidden py-1   ml-1 z-10">
+							<Button disableRipple
+								variant={viewModules ? "light" : "bordered"}
+								onClick={() => handleViewModules()}
 							>
-								{module.description}
-							</Text>
-
-							<div className={Styles.divider}>
-								<Divider />
-							</div>
-							<div className={Styles.controllerWrapper}>
-								<ToggleButton
-									appearance={viewmodules ? "transparent" : "outline"}
-									onClick={() => handleViewModules()}
-								>
-									{viewmodules ? "Hide modules" : "View modules"}
-								</ToggleButton>
-								<ToggleButton
-									appearance={isFullscreen ? "outline" : "subtle"}
-									checked={isFullscreen}
-									icon={
-										isFullscreen ? (
-											<Minimize2 size={20} />
-										) : (
-											<Maximize2 size={20} />
-										)
-									}
-									onClick={() => handleFullscreen()}
-								>
-									Full screen
-								</ToggleButton>
-							</div>
-						</Stack>
+								{viewModules ? "Hide modules" : "View modules"}
+							</Button>
+							<Button disableRipple
+								variant={isFullscreen ? "bordered" : "light"}
+								startContent={
+									isFullscreen ? (
+										<Minimize2 size={20} />
+									) : (
+										<Maximize2 size={20} />
+									)
+								}
+								onClick={() => handleFullscreen()}
+							>
+								Full screen
+							</Button>
+						</CardFooter>
 					</Card>
 				)}
 			</div>

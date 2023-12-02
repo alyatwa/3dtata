@@ -1,16 +1,10 @@
-import React, { useState } from "react";
-import {
-	Image,
-	makeStyles,
-	Button,
-	Text,
-	shorthands,
-} from "@fluentui/react-components";
+import React, { useState } from "react"; 
 import { Link } from "react-router-dom";
 import { Carousel } from "@trendyol-js/react-carousel";
 import { ArrowLeftCircle, ArrowRightCircle } from "react-feather";
+import { Button, Image } from "@nextui-org/react";
 
-const useStyles = makeStyles({
+/* const useStyles = makeStyles({
 	arrows: {
 		display: "flex",
 		flexDirection: "row",
@@ -34,13 +28,13 @@ const useStyles = makeStyles({
 		justifyContent: "center",
 		width: "115px",
 	},
-});
+}); */
 export default function Modules(props: any) {
-	const Styles = useStyles();
-
+	//const Styles = useStyles();
+//className={Styles.arrows}
 	return (
 		<Carousel
-			className={Styles.arrows}
+			
 			leftArrow={<ArrowLeftCircle size={25} />}
 			rightArrow={<ArrowRightCircle size={25} />}
 			show={4}
@@ -48,12 +42,12 @@ export default function Modules(props: any) {
 			swiping={true}
 		>
 			{props.data.modules.map((module: any) => (
-				<div className={Styles.card} key={module.id}>
-					<Button className={Styles.item} appearance="transparent">
-						<Image shape="rounded" src={module.img} height={100} width={100} />
-						<Text truncate wrap={false} className={Styles.text}>
+				<div className="flex" key={module.id}>
+					<Button >
+						<Image src={module.img} height={100} width={100} />
+						<p className="truncate">
 							{module.title}
-						</Text>
+						</p>
 					</Button>
 				</div>
 			))}
