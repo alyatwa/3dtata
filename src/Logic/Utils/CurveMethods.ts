@@ -31,7 +31,7 @@ export function createCurveFromJSON(json:any) {
     }
     
     // Create a CatmullRomCurve3 using the points array
-    const curve = new THREE.CatmullRomCurve3(points); 
+    const curve = new THREE.CatmullRomCurve3(points) as any
     curve.closed = json.closed;
 
     return curve;

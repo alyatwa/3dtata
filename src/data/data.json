@@ -151,6 +151,7 @@
 		"modules": [
 			{
 				"id": "uyygb",
+				"slug":"f9",
 				"title": "Falcon 9",
 				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
 				"controls": [
@@ -168,8 +169,133 @@
 					}
 		
 				],
-				"description": "An air handling unit is comprised of a filter, humidifier, blowers (fans) and heat exchanger (fins). Some air handling units are large enough for a person to enter, so engineers sometimes enter air handling units for maintenance.",
+				"description": " ",
 				"moduleSource": "f9"
+			},
+			{
+				"id": "uyygb",
+				"slug":"earth",
+				"title": "Earth",
+				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"controls": [
+					{
+						"id": "jjgncddfrd",
+						"type": "enableLoop",
+						"event": "enableLoop",
+						"label": "Enable Loop"
+					},
+					{
+						"id": "vgtyyh",
+						"type": "playAnimation",
+						"event": "playAnimation",
+						"label": "Play Animation"
+					}
+		
+				],
+				"description": "",
+				"moduleSource": "earth"
+			},
+			{
+				"id": "ddddfdfdf",
+				"slug":"mars",
+				"title": "Mars",
+				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"controls": [
+					{
+						"id": "vgtyyh",
+						"type": "playAnimation",
+						"event": "playAnimation",
+						"label": "Play Animation"
+					}
+		
+				],
+				"description": "mars",
+				"moduleSource": "mars"
+			},
+			{
+				"id": "mon56",
+				"slug":"moon",
+				"title": "Mars",
+				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"controls": [
+					{
+						"id": "vgtyyh",
+						"type": "playAnimation",
+						"event": "playAnimation",
+						"label": "Play Animation"
+					}
+		
+				],
+				"description": "moon",
+				"moduleSource": "moon"
+			},
+			{
+				"id": "dvenus6",
+				"slug":"venus",
+				"title": "Venus",
+				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"controls": [
+					{
+						"id": "vgtyyh",
+						"type": "playAnimation",
+						"event": "playAnimation",
+						"label": "Play Animation"
+					}
+		
+				],
+				"description": "venus",
+				"moduleSource": "venus"
+			},
+			{
+				"id": "jupiter6",
+				"slug":"jupiter",
+				"title": "Jupiter",
+				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"controls": [
+					{
+						"id": "vgtyyh",
+						"type": "playAnimation",
+						"event": "playAnimation",
+						"label": "Play Animation"
+					}
+		
+				],
+				"description": "jupiter",
+				"moduleSource": "jupiter"
+			},
+			{
+				"id": "mercury6",
+				"slug":"mercury",
+				"title": "Mercury",
+				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"controls": [
+					{
+						"id": "vgtyyh",
+						"type": "playAnimation",
+						"event": "playAnimation",
+						"label": "Play Animation"
+					}
+		
+				],
+				"description": "mercury",
+				"moduleSource": "mercury"
+			},
+			{
+				"id": "earthgl",
+				"slug":"earth-gl",
+				"title": "Earth",
+				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"controls": [
+					{
+						"id": "vgtyyh",
+						"type": "playAnimation",
+						"event": "playAnimation",
+						"label": "Play Animation"
+					}
+		
+				],
+				"description": "earth",
+				"moduleSource": "earth-gl"
 			}
 		]
 	}

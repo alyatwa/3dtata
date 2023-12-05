@@ -49,7 +49,7 @@ export default class CylinderMaterial {
     this.uniforms = {
         perlinnoise: { 
             value: new THREE.TextureLoader().load(
-                "../flame/water-min.jpg"
+                "../../flame/water-min.jpg"
             )
         },
         color4: {
@@ -60,7 +60,7 @@ export default class CylinderMaterial {
         },
         noise: { 
             value: new THREE.TextureLoader().load(
-                "../flame/noise9.jpg"
+                "../../flame/noise9.jpg"
             )
         }
     };

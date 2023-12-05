@@ -42,9 +42,10 @@ export default function Module() {
 	//const classes = useStyles();
 	const params = useParams();
 	//const makeEvent: any = useRef(null);
-	const course = fake.find((x) => x.slug === params.courseId);
+	const course = fake.find((x) => x.slug === params.courseId); 
+	const module = course?.modules.find((x) => x.slug === params.moduleId);
 	const [currentModule, setModule] = useState<any | null>(null);
-	!currentModule && setModule(course!.modules[0]);
+	!currentModule && setModule(module);
 	const ModelGLB = lazy(
 		() => import(`../../modules/${currentModule!.moduleSource}/index.tsx`)
 	);
@@ -68,10 +69,10 @@ export default function Module() {
 
 	return (
 		<div>
-		{/* 	<Leva
+		 <Leva
 				collapsed={true} // default = false, when true the GUI is collpased
 				hidden={false} // default = false, when true the GUI is hidden
-			/> */}
+			/> 
 
 			<div className="w-full h-full absolute t-0 l-0">
 				<Canvas 
@@ -79,7 +80,7 @@ export default function Module() {
 						outputEncoding: THREE.LinearEncoding,
 						antialias: true,
 						pixelRatio: 2,
-						physicallyCorrectLights: true,
+						//physicallyCorrectLights: true,
 						autoClear: false,
 						toneMapping: THREE.NoToneMapping,
 					}}
@@ -89,11 +90,11 @@ export default function Module() {
 						<ModelGLB receiveShadow castShadow />
 					</Suspense>
 
-					{/* 	<Effect /> */}
-					<ambientLight intensity={10} />
+					{/* 	<Effect /> 
+					<ambientLight intensity={10} />*/}
 				 
 {/**/}
-					<Environment files="../venice_sunset_1k.hdr" />
+					<Environment files="../../venice_sunset_1k.hdr" />
 					 
 				</Canvas>
 				 

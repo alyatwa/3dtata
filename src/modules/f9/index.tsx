@@ -35,7 +35,7 @@ export default function ModelGLB(props: any) {
 	const mats = new Materials({ resources, debug: false });
 	const BLOOM_SCENE = 1;
 
-	const scene = useFBX("./../models/f9.fbx");
+	const scene = useFBX("./../../models/f9.fbx");
 	const [mixer] = useState(() => new THREE.AnimationMixer(scene));
 	let flameMat = new FlameMaterial();
 	let BloomF = new BloomFX(gl, _scene, _scene.getObjectByName("ortho"), size);

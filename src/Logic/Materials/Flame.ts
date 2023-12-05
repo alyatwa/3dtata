@@ -63,7 +63,7 @@ const fragflame = `
 const color = new THREE.Color('red')
 const vector3 = new THREE.Vector3(color.r, color.g, color.b);
 let v = new THREE.TextureLoader().load(
-    "../flame/water-min.jpg"
+    "../../flame/water-min.jpg"
 )
 v.encoding = THREE.sRGBEncoding
 
@@ -87,7 +87,7 @@ export default class FlameMaterial {
         },
         noise: {
             value: new THREE.TextureLoader().load(
-                "../flame/noise9.jpg"
+                "../../flame/noise9.jpg"
             )
         }
     },
