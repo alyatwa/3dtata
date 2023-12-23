@@ -10,7 +10,6 @@ import {
 } from "react-feather";
 import useSound from "use-sound";
 import fullscreenSfx from "/sounds/Blow.mp3";
-import { usePanel } from "../context/panel-context";
 import {
 	Button,
 	Card,
@@ -19,14 +18,57 @@ import {
 	Divider,
 	Radio,
 	Switch,
+	Slider,
+	Checkbox,
 } from "@nextui-org/react";
-
-import { useSnapshot } from "valtio";
+import React from "react";
+import { proxy, subscribe, useSnapshot } from "valtio";
 import { state } from "../context/panel-proxy";
+import { AnaglyphEffect } from "three-stdlib";
+import AudioPlayer from "./AudioPlayer";
+
+type Control = {
+	initialValue?: any;
+	label?: string;
+};
+
+type SliderControl = Control & {
+	type: "slider";
+	step: number;
+	min: number;
+	max: number;
+	value: any;
+	onChange?: (value: number) => void;
+};
+
+type PlayButtonControl = Control & {
+	type: "playButton";
+	value: any;
+};
+type AudioControl = Control & {
+	type: "audioPlayer";
+	value: any;
+};
+
+type CheckboxControl = Control & {
+	type: "checkbox";
+	value: any;
+};
+
+type StateType = {
+	[key: string]:
+		| PlayButtonControl
+		| CheckboxControl
+		| SliderControl
+		| AudioControl;
+};
+
+const stateP = proxy({} as StateType);
 
 const Panel = (props: any) => {
 	//const { setPlayAnimation, playAnimation, viewParticles, setViewParticles, setEnableAnimationLoop, enableAnimationLoop } = usePanel();
-	const {enableAnimationLoop, playAnimation}= useSnapshot(state)
+	//const { enableAnimationLoop, playAnimation } = useSnapshot(state);
+	const snapshot = useSnapshot(stateP);
 	const module: any = props.metadata;
 	const [play] = useSound(fullscreenSfx);
 	//const [isAnimationPlay, setAnimationPlay] = useState(false);
@@ -70,11 +112,6 @@ const Panel = (props: any) => {
 			document.removeEventListener("fullscreenchange", onFullscreenChange);
 	}, []);
 
-/* 	const updateControl = (object: any, newValue: any) => {
-		let data = object;
-		object.value = newValue;
-		props.sendEvent(data);
-	}; */
 	type Control = {
 		id: string;
 		label: string;
@@ -93,18 +130,21 @@ const Panel = (props: any) => {
 						{control.label}
 					</Switch>
 				); */
-			case "enableLoop":
-					return (
-						<Switch size="sm"
-							defaultSelected={enableAnimationLoop as boolean}
-							isSelected={enableAnimationLoop as boolean}
-							key={control.id}
-							onChange={(ev) => state.enableAnimationLoop=ev.currentTarget.checked}
-						>
-							{control.label}
-						</Switch>
-					);
-			/* case "showOrHideParticles":
+			/*case "enableLoop":
+				return (
+					<Switch
+						size="sm"
+						defaultSelected={enableAnimationLoop as boolean}
+						isSelected={enableAnimationLoop as boolean}
+						key={control.id}
+						onChange={(ev) =>
+							(state.enableAnimationLoop = ev.currentTarget.checked)
+						}
+					>
+						{control.label}
+					</Switch>
+				);
+		 case "showOrHideParticles":
 				return (
 					<Switch size="sm"
 						defaultSelected={viewParticles}
@@ -125,13 +165,13 @@ const Panel = (props: any) => {
 				return null;
 		}
 	};
- 
+
 	return (
 		<>
 			{viewModules && (
 				<div className="hidden">{/* <Modules data={props.course} /> */}</div>
-			)} 
-			<div className="absolute top-1/2 transform -translate-y-1/2 right-0 w-[300px] mr-[15px] z-4 ">
+			)}
+			<div className="absolute top-1/2 transform -translate-y-1/2 right-0 w-[300px] mr-[15px] z-101 ">
 				<div className="flex justify-end">
 					<Button
 						isIconOnly
@@ -149,37 +189,102 @@ const Panel = (props: any) => {
 				{isPanelVisible && (
 					<Card
 						isBlurred
-						className="border-none bg-background/60 dark:bg-default-100/50 mt-2 max-w-[610px]"
+						className="border-none bg-background/90 dark:bg-default-100/50 mt-2 max-w-[610px]"
 						shadow="sm"
 					>
 						<CardBody className="flex gap-2 flex-col">
-							<p className="text-lg text-black/80 text-center">{module.title}</p>
-							<div className="flex justify-center items-center "> 
-							<Button 
-								isIconOnly
-								radius="full"
-								color="primary"
-								disableRipple
-								size="md"
-								className="p-2"
-								variant={playAnimation ? "bordered" : "solid"}
-								onClick={() => {state.playAnimation = !playAnimation as boolean}}
-							>
-								{playAnimation ? <Pause size={20} /> : <Play size={20} />}
-							</Button>
-							 </div>
+							<p className="text-lg text-black text-center">{module.title}</p>
 
+							<div className="flex flex-col gap-2">
+								{snapshot &&
+									Object.entries(snapshot).map(([key, value]) => {
+										const { type, ...props } = value;
+
+										switch (type) {
+											case "playButton":
+												const playButtonControl = stateP[
+													key
+												] as PlayButtonControl;
+												return (
+													<div
+														key={key}
+														className="flex justify-center items-center "
+													>
+														<Button
+															isIconOnly
+															radius="full"
+															color="primary"
+															disableRipple
+															size="md"
+															className="p-2"
+															variant={
+																playButtonControl.value ? "bordered" : "solid"
+															}
+															onClick={() => {
+																playButtonControl.value =
+																	!playButtonControl.value as boolean;
+															}}
+														>
+															{playButtonControl.value ? (
+																<Pause size={20} />
+															) : (
+																<Play size={20} />
+															)}
+														</Button>
+													</div>
+												);
+											case "slider":
+												const sliderControl = stateP[key] as SliderControl;
+												return (
+													<Slider
+														key={key}
+														value={sliderControl.value}
+														onChange={(value) => (sliderControl.value = value)}
+														label={sliderControl.label || key}
+														step={sliderControl.step}
+														maxValue={sliderControl.max}
+														minValue={sliderControl.min}
+														className="max-w-md"
+													/>
+												);
+											case "checkbox":
+												const checkboxControl = stateP[key] as CheckboxControl;
+												return (
+													<Checkbox
+														key={key}
+														isSelected={checkboxControl.value}
+														onValueChange={(e) => (checkboxControl.value = e)}
+													>
+														{checkboxControl.label || key}
+													</Checkbox>
+												);
+											case "audioPlayer":
+												const audioControl = stateP[key] as AudioControl;
+												return (
+													<AudioPlayer
+														key={key}
+														audioSrc={audioControl.value}
+													/>
+												);
+
+											default:
+												return null;
+										}
+									})}
+							</div>
 							{module.controls.map((control: any) => controlEvents(control))}
 						</CardBody>
 						<Divider className="my-2" />
 						<CardFooter className="justify-between before:bg-white/10  overflow-hidden py-1   ml-1 z-10">
-							<Button disableRipple
+							<Button
+								disableRipple
 								variant={viewModules ? "light" : "bordered"}
 								onClick={() => handleViewModules()}
 							>
 								{viewModules ? "Hide modules" : "View modules"}
 							</Button>
-							<Button disableRipple
+							<Button
+								disableRipple
 								variant={isFullscreen ? "bordered" : "light"}
 								startContent={
 									isFullscreen ? (
@@ -200,3 +305,20 @@ const Panel = (props: any) => {
 	);
 };
 export default Panel;
+
+// Custom hook to manage dynamic states based on controls
+
+export function useDynamicStates(controls: {
+	[key: string]: PlayButtonControl | CheckboxControl | SliderControl | AudioControl;
+}) {
+	React.useEffect(() => {
+		Object.entries(controls).forEach(([key, value]) => {
+			stateP[key] = value;
+		});
+	}, []);
+
+	return {
+		stateP,
+		//controls,
+	} as any;
+}

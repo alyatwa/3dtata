@@ -296,6 +296,40 @@
 				],
 				"description": "earth",
 				"moduleSource": "earth-gl"
+			},
+			{
+				"id": "solarSystem",
+				"slug":"solar-system",
+				"title": "Solar System",
+				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"controls": [
+					{
+						"id": "vgtyyh",
+						"type": "playAnimation",
+						"event": "playAnimation",
+						"label": "Play Animation"
+					}
+		
+				],
+				"description": "solar System",
+				"moduleSource": "solar-system"
+			},
+			{
+				"id": "sun",
+				"slug":"sun",
+				"title": "Sun",
+				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"controls": [
+					{
+						"id": "vgtyyh",
+						"type": "playAnimation",
+						"event": "playAnimation",
+						"label": "Play Animation"
+					}
+		
+				],
+				"description": "sun",
+				"moduleSource": "sun"
 			}
 		]
 	}

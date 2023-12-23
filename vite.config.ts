@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 //import glsl from 'vite-plugin-glsl';
 import { dependencies } from "./package.json";
+import glsl from "vite-plugin-glsl"
 
 const globalVendorPackages = ["react", "react-dom", "react-router-dom"];
 
@@ -17,7 +18,7 @@ function renderChunks(deps) {
 // https://vitejs.dev/config/
 export default defineConfig({
   assetsInclude: ['**/*.glb', '**/*.hdr'],
-  plugins: [react()/* ,glsl() */],
+  plugins: [react() ,glsl()],
   build: {
     assetsInlineLimit: 0,
     minify: true,

@@ -12,7 +12,7 @@
       "module": "ESNext",
       "moduleResolution": "Node",
       "types": [
-        "three"
+        "three","vite-plugin-glsl/ext"
     ],
       "resolveJsonModule": true,
       "isolatedModules": true,

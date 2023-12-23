@@ -43,7 +43,11 @@ export default function Module() {
 	const params = useParams();
 	//const makeEvent: any = useRef(null);
 	const course = fake.find((x) => x.slug === params.courseId); 
-	const module = course?.modules.find((x) => x.slug === params.moduleId);
+	const module = course?.modules.find((x) => x.slug! === params.moduleId);
+	if(!module){
+   console.error("module not found")
+		return
+	}
 	const [currentModule, setModule] = useState<any | null>(null);
 	!currentModule && setModule(module);
 	const ModelGLB = lazy(
@@ -93,9 +97,9 @@ export default function Module() {
 					{/* 	<Effect /> 
 					<ambientLight intensity={10} />*/}
 				 
-{/**/}
+{/**/}	
 					<Environment files="../../venice_sunset_1k.hdr" />
-					 
+				 
 				</Canvas>
 				 
 			</div>

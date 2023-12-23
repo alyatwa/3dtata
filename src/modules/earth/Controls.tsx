@@ -46,8 +46,9 @@ const Controls = ({target}:{target: THREE.Vector3}) => {
 				minPolarAngle={THREE.MathUtils.degToRad(90)}
 				maxPolarAngle={THREE.MathUtils.degToRad(90)}
 				// horizontal angle of the orbit
+				/* 
 				minAzimuthAngle={THREE.MathUtils.degToRad(90)}
-				maxAzimuthAngle={THREE.MathUtils.degToRad(90)}
+				maxAzimuthAngle={THREE.MathUtils.degToRad(90)} */
 			/>
 		   <PerspectiveCamera	
 				makeDefault
