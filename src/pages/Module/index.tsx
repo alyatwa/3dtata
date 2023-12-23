@@ -6,22 +6,18 @@ import React, {
 	useState,
 	Suspense,
 } from "react";
-import {
-	Environment, 
-	OrbitControls
-} from "@react-three/drei";
+import { Environment, OrbitControls } from "@react-three/drei";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { useControls, folder, Leva } from "leva";  
+import { useControls, folder, Leva } from "leva";
 
 import Panel from "../../components/Panel";
 import { useParams } from "react-router-dom";
 import { LayerMaterial, Color, Depth } from "lamina";
 import fake from "../../data/data.json";
-import BlurFX from "../../Logic/FX/BlurFX"; 
+import BlurFX from "../../Logic/FX/BlurFX";
 import { usePanel } from "../../context/panel-context";
 extend({ OrbitControls });
- 
 
 /* const useStyles = makeStyles({
 	canvaStyle: {
@@ -42,11 +38,12 @@ export default function Module() {
 	//const classes = useStyles();
 	const params = useParams();
 	//const makeEvent: any = useRef(null);
-	const course = fake.find((x) => x.slug === params.courseId); 
+	const course = fake.find((x) => x.slug === params.courseId);
+	// @ts-ignore
 	const module = course?.modules.find((x) => x.slug! === params.moduleId);
-	if(!module){
-   console.error("module not found")
-		return
+	if (!module) {
+		console.error("module not found");
+		return <p>module not found</p>;
 	}
 	const [currentModule, setModule] = useState<any | null>(null);
 	!currentModule && setModule(module);
@@ -60,9 +57,7 @@ export default function Module() {
 	const optionsModel = useMemo(() => {
 		return { x: 0, y: -12, z: 2 };
 	}, []);
-	
- 
-	
+
 	function Effect() {
 		const { gl, scene, camera } = useThree();
 		const BlurEffect = new BlurFX(gl, scene, camera);
@@ -73,14 +68,14 @@ export default function Module() {
 
 	return (
 		<div>
-		 <Leva
+			<Leva
 				collapsed={true} // default = false, when true the GUI is collpased
 				hidden={false} // default = false, when true the GUI is hidden
-			/> 
+			/>
 
 			<div className="w-full h-full absolute t-0 l-0">
-				<Canvas 
-					gl={{ 
+				<Canvas
+					gl={{
 						outputEncoding: THREE.LinearEncoding,
 						antialias: true,
 						pixelRatio: 2,
@@ -96,19 +91,14 @@ export default function Module() {
 
 					{/* 	<Effect /> 
 					<ambientLight intensity={10} />*/}
-				 
-{/**/}	
+
+					{/**/}
 					<Environment files="../../venice_sunset_1k.hdr" />
-				 
 				</Canvas>
-				 
 			</div>
 
 			<div>
-				<Panel
-					metadata={currentModule}
-					course={course}
-				/>
+				<Panel metadata={currentModule} course={course} />
 			</div>
 		</div>
 	);

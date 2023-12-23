@@ -308,9 +308,7 @@ export default Panel;
 
 // Custom hook to manage dynamic states based on controls
 
-export function useDynamicStates(controls: {
-	[key: string]: PlayButtonControl | CheckboxControl | SliderControl | AudioControl;
-}) {
+export function useDynamicStates(controls: StateType) {
 	React.useEffect(() => {
 		Object.entries(controls).forEach(([key, value]) => {
 			stateP[key] = value;

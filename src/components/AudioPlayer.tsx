@@ -1,12 +1,10 @@
 import { Card, CardBody, Image, Button, Slider } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "react-feather";
-import useSound from "use-sound";
 
 const AudioPlayer = ({ audioSrc }: { audioSrc: string }) => {
 	const [playSound, setPlaySound] = useState<boolean>(false);
 	const [trackProgress, setTrackProgress] = useState<number>(0);
-	const [load, setLoad] = useState<boolean>(false);
 	const audioRef = useRef<HTMLAudioElement>(new Audio(audioSrc));
 	const intervalRef = useRef<number>(0);
 	const isReady = useRef<boolean>(false);
