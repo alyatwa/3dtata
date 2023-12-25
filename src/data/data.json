@@ -129,7 +129,7 @@
 				"camera":{
 					"target":[0,4,0]
 				},
-				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"img": "../../sun.png",
 				"controls": [
 					{
 						"id": "xds",
@@ -153,7 +153,7 @@
 				"id": "uyygb",
 				"slug":"f9",
 				"title": "Falcon 9",
-				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"img": "../../sun.png",
 				"controls": [
 					{
 						"id": "jjgncddfrd",
@@ -176,7 +176,7 @@
 				"id": "uyygb",
 				"slug":"earth",
 				"title": "Earth",
-				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"img": "../../sun.png",
 				"controls": [
 					{
 						"id": "jjgncddfrd",
@@ -199,7 +199,7 @@
 				"id": "ddddfdfdf",
 				"slug":"mars",
 				"title": "Mars",
-				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"img": "../../sun.png",
 				"controls": [
 					{
 						"id": "vgtyyh",
@@ -215,8 +215,8 @@
 			{
 				"id": "mon56",
 				"slug":"moon",
-				"title": "Mars",
-				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"title": "Moon",
+				"img": "../../sun.png",
 				"controls": [
 					{
 						"id": "vgtyyh",
@@ -233,7 +233,7 @@
 				"id": "dvenus6",
 				"slug":"venus",
 				"title": "Venus",
-				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"img": "../../sun.png",
 				"controls": [
 					{
 						"id": "vgtyyh",
@@ -250,7 +250,7 @@
 				"id": "jupiter6",
 				"slug":"jupiter",
 				"title": "Jupiter",
-				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"img": "../../sun.png",
 				"controls": [
 					{
 						"id": "vgtyyh",
@@ -267,7 +267,7 @@
 				"id": "mercury6",
 				"slug":"mercury",
 				"title": "Mercury",
-				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"img": "../../sun.png",
 				"controls": [
 					{
 						"id": "vgtyyh",
@@ -284,7 +284,7 @@
 				"id": "earthgl",
 				"slug":"earth-gl",
 				"title": "Earth",
-				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"img": "../../sun.png",
 				"controls": [
 					{
 						"id": "vgtyyh",
@@ -301,7 +301,7 @@
 				"id": "solarSystem",
 				"slug":"solar-system",
 				"title": "Solar System",
-				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"img": "../../sun.png",
 				"controls": [
 					{
 						"id": "vgtyyh",
@@ -318,7 +318,7 @@
 				"id": "sun",
 				"slug":"sun",
 				"title": "Sun",
-				"img": "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg",
+				"img": "../../sun.png",
 				"controls": [
 					{
 						"id": "vgtyyh",
