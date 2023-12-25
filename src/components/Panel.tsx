@@ -171,7 +171,7 @@ const Panel = (props: any) => {
 			{viewModules && (
 				<div className="hidden">{/* <Modules data={props.course} /> */}</div>
 			)}
-			<div className="absolute top-1/2 transform -translate-y-1/2 right-0 w-[300px] mr-[15px] z-101 ">
+			<div className="absolute top-1/2 transform -translate-y-1/2 right-0 w-[300px] mr-[15px] z-[101] ">
 				<div className="flex justify-end">
 					<Button
 						isIconOnly

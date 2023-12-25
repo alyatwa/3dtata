@@ -1,6 +1,6 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { useControls } from "leva";
 import { state } from "../../context/panel-proxy";
@@ -13,10 +13,12 @@ import shaderVertex from "../../Logic/shaders/planet/vertex.glsl";
 import { Bounds, Html, OrthographicCamera } from "@react-three/drei";
 import SelectToZoom from "../../utils/SelectToZoom";
 import { useDynamicStates } from "../../components/Panel";
+import TextureLoaderManager from "../../utils/texture.loader";
+import useTextures from "../../hooks/useTextures";
 //import { addRotationControls } from "../mars/rotation.controls";
 
 export default function ModelGLB(props: any) {
-	const { enableAnimationLoop, playAnimation } = useSnapshot(state);
+	//const [loaded, setLoaded] = useState(false);
 	const { camera, gl, scene: _scene } = useThree();
 	gl.outputEncoding = THREE.sRGBEncoding;
 	gl.toneMapping = THREE.NoToneMapping;
@@ -94,7 +96,7 @@ export default function ModelGLB(props: any) {
 	}, []); */
 
 	//const path_of_planets = [];
-	const textureLoader = new THREE.TextureLoader();
+	/* 	const textureLoader = new THREE.TextureLoader();
 
 	const sunTexture = textureLoader.load("../../texture/sun/2k_sun.jpg");
 	sunTexture.encoding = THREE.sRGBEncoding;
@@ -126,8 +128,45 @@ export default function ModelGLB(props: any) {
 		"../../texture/uranus/uranus_ring.png"
 	);
 	const moonTexture = textureLoader.load("../../texture/moon/2k_moon.jpg");
-	const uStars = textureLoader.load("../../texture/mars/8k_stars.jpg");
-	const planets = [
+	const uStars = textureLoader.load("../../texture/mars/8k_stars.jpg"); */
+	const paths = useMemo(() =>["../../texture/mars/8k_stars.jpg",
+		
+		"../../texture/mercury/2k_mercury.jpg",
+		"../../texture/venus/2k_venus.jpg",
+		"../../texture/earth-gl/2k_earth_color.jpg",
+		"../../texture/mars/2k_mars.jpg",
+		"../../texture/jupiter/2k_jupiter.jpg",
+		"../../texture/saturn/2k_saturn.jpg",
+		"../../texture/uranus/2k_uranus.jpg",
+		"../../texture/neptune/2k_neptune.jpg",
+		"../../texture/pluto/plutomap2k.jpg",
+		"../../texture/saturn/2k_saturn_ring_alpha.png",
+		"../../texture/uranus/uranus_ring.png",
+		"../../texture/moon/2k_moon.jpg",
+		"../../texture/sun/2k_sun.jpg",
+	], []);
+	
+	const [textures, isLoading] = useTextures(paths, (loadedTextures) => {
+		console.log('All textures are loaded:');
+	  }); 
+	const [
+		uStars,
+		mercuryTexture,
+		venusTexture,
+		earthTexture,
+		marsTexture,
+		jupiterTexture,
+		saturnTexture,
+		uranusTexture,
+		neptuneTexture,
+		plutoTexture,
+		saturnRingTexture,
+		uranusRingTexture,
+		moonTexture,
+		sunTexture,
+	] =  textures;
+	
+	const planets = useMemo(() => [
 		{
 			name: "sun",
 			rotatingSpeedAroundSun: 0,
@@ -136,6 +175,16 @@ export default function ModelGLB(props: any) {
 			posX: 0,
 			texture: sunTexture,
 			diameter: "1,392,000 km",
+			moon: null,
+		},
+		{
+			name: "jupiter",
+			rotatingSpeedAroundSun: 0.002,
+			selfRotationSpeed: 0.04,
+			radius: 12,
+			posX: 100,
+			texture: jupiterTexture,
+			diameter: "143,000 km",
 			moon: null,
 		},
 		{
@@ -230,40 +279,49 @@ export default function ModelGLB(props: any) {
 				ringmat: uranusRingTexture,
 			},
 		},
-	];
-
+	], [textures]);
+	
 	return (
 		<>
 			<color attach="background" args={[0x000000]} />
 			<ambientLight color={0xffffff} intensity={0} />
 			<pointLight color={0xffffff} intensity={4} distance={300} />
 			<Controls />
-			<BG uStars={uStars} />
-			<Bounds fit clip observe margin={1.2}>
-				<SelectToZoom>
-					{planets.map((x) => (
-						<Planet
-							key={x.name}
-							data={{
-								size: x.diameter
-							}}
-							name={x.name}
-							rotatingSpeedAroundSun={x.rotatingSpeedAroundSun}
-							selfRotationSpeed={x.selfRotationSpeed}
-							texture={x.texture}
-							radius={x.radius}
-							posX={x.posX}
-							moon={x.moon ? { texture: x?.moon.texture as any } : ({} as any)}
-							ring={x.hasOwnProperty('ring') ? {
-								innerRadius: x.ring?.innerRadius,
-								outerRadius: x.ring?.outerRadius,
-								ringmat: x.ring?.ringmat,
-							} : ({} as any)}
-						/>
-					))}
-					
-				</SelectToZoom>
-			</Bounds>
+			{isLoading ? <ambientLight color={0xffffff} intensity={0} /> : (
+				<>
+					<BG uStars={uStars} />
+					<Bounds fit clip observe margin={1.2}>
+						<SelectToZoom>
+							{planets.map((x) => (
+								<Planet
+									key={x.name}
+									data={{
+										size: x.diameter,
+									}}
+									name={x.name}
+									rotatingSpeedAroundSun={x.rotatingSpeedAroundSun}
+									selfRotationSpeed={x.selfRotationSpeed}
+									texture={x.texture}
+									radius={x.radius}
+									posX={x.posX}
+									moon={
+										x.moon ? { texture: x?.moon.texture as any } : ({} as any)
+									}
+									ring={
+										x.hasOwnProperty("ring")
+											? {
+													innerRadius: x.ring?.innerRadius,
+													outerRadius: x.ring?.outerRadius,
+													ringmat: x.ring?.ringmat,
+											  }
+											: ({} as any)
+									}
+								/>
+							))}
+						</SelectToZoom>
+					</Bounds>
+				</>
+			)}
 		</>
 	);
 }
@@ -279,9 +337,9 @@ const Planet = ({
 	selfRotationSpeed,
 	rotatingSpeedAroundSun,
 }: {
-	data:{
-	 size: string
-	}
+	data: {
+		size: string;
+	};
 	name?: string;
 	ring?: {
 		innerRadius: number;
@@ -296,12 +354,12 @@ const Planet = ({
 	selfRotationSpeed: number;
 	texture: THREE.Texture;
 	rotatingSpeedAroundSun: number;
-}) => {
+}) => { 
 	const { stateP } = useDynamicStates({
-		play:{
-			type:"playButton",
+		play: {
+			type: "playButton",
 			value: true,
-			label: "Play"
+			label: "Play",
 		},
 		speed: {
 			label: "Speed",
@@ -319,7 +377,8 @@ const Planet = ({
 		},
 		audio: {
 			type: "audioPlayer",
-			value: 'https://res.cloudinary.com/recapdataebse/video/upload/v1703282023/3dtata/solarsystemcut_qmf9ez.mp3',
+			value:
+				"https://res.cloudinary.com/recapdataebse/video/upload/v1703282023/3dtata/solarsystemcut_qmf9ez.mp3",
 		},
 	});
 	//let speed = stateP.speed?.value/10   // 0.5;
@@ -342,7 +401,6 @@ const Planet = ({
 		}
 	});
 
-	
 	return (
 		<>
 			<LineCircle radius={posX} posX={posX} />
@@ -370,7 +428,6 @@ const Planet = ({
 						key={name}
 						ref={html}
 						center
-						
 						zIndexRange={[100, 0]}
 						position={[0, radius * 2, 0]}
 					>

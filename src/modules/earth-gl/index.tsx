@@ -8,37 +8,37 @@ import { useSnapshot } from "valtio";
 import PlanetMaterial from "../../Logic/Materials/Planet";
 import useWindowSize from "../../utils/useWindowSize";
 import { addRotationControls } from "../mars/rotation.controls";
+import useTextures from "../../hooks/useTextures";
+import { useDynamicStates } from "../../components/Panel";
 
 export default function ModelGLB(props: any) {
 	const { enableAnimationLoop, playAnimation } = useSnapshot(state);
 	const { camera, gl, scene: _scene } = useThree();
 	//gl.outputEncoding = THREE.sRGBEncoding;
 	gl.toneMapping = THREE.NoToneMapping;
-	
+	const { stateP } = useDynamicStates({
+		play: {
+			type: "playButton",
+			value: true,
+			label: "Play",
+		},
+	});
 	const size = useWindowSize();
-	const uStars = new THREE.TextureLoader().load(
-		"../../texture/mars/8k_stars.jpg"
-	);
-	//uStars.encoding = THREE.sRGBEncoding;
-
-	const uEarthColor = new THREE.TextureLoader().load(
-		"../../texture/earth-gl/2k_earth_color.jpg"
-	);
+  
+	const paths = useMemo(
+		() => ["../../texture/mars/8k_stars.jpg", "../../texture/earth-gl/2k_earth_color.jpg",
+		"../../texture/earth-gl/2k_earth_bump.jpg","../../texture/earth-gl/2k_earth_clouds.jpg",
+		"../../texture/earth-gl/2k_earth_specular.jpg", "../../texture/earth-gl/2k_earth_night.jpg"
 	
-	const uEarthBump = new THREE.TextureLoader().load(
-		"../../texture/earth-gl/2k_earth_bump.jpg"
+	],
+		[]
 	);
-	const uEarthClouds = new THREE.TextureLoader().load(
-		"../../texture/earth-gl/2k_earth_clouds.jpg"
-	);
-	const uEarthSpecular = new THREE.TextureLoader().load(
-		"../../texture/earth-gl/2k_earth_specular.jpg"
-	);
-	const uEarthNight = new THREE.TextureLoader().load(
-		"../../texture/earth-gl/2k_earth_night.jpg"
-	);
-	//uPlanet.encoding = THREE.sRGBEncoding;
 
+	const [textures, isLoading] = useTextures(paths, (loadedTextures) => {
+		console.log("All textures are loaded");
+	});
+	const [uStars, uEarthColor, uEarthBump, uEarthClouds, uEarthSpecular, uEarthNight] = textures;
+	 
 	const earthRef = useRef<any>();
 	const pointRef = useRef<any>();
 
@@ -77,7 +77,7 @@ export default function ModelGLB(props: any) {
 			uQuality: { value: Math.min(window.devicePixelRatio, 2) },
 			uResolution: { value: [window.innerWidth, window.innerHeight] },
 		}),
-		[]
+		[textures]
 	);
 	addRotationControls(uniforms, gl.domElement);
 	let earthMat = new PlanetMaterial(uniforms, true);
@@ -88,14 +88,14 @@ export default function ModelGLB(props: any) {
 		uniforms.uCloudsScale.value = earth.uCloudsScale;
 		uniforms.uSunIntensity.value = earth.uSunIntensity;
 		uniforms.uAmbientLight.value = earth.uAmbientLight;
-		uniforms.uTime.value += playAnimation ? (uniforms.uRotationSpeed.value as number) * 0.1 : 0;
+		uniforms.uTime.value += (stateP.play?.value ?? true) ? (uniforms.uRotationSpeed.value as number) * 0.1 : 0;
 	});
 	useEffect(() => {
 		if (earthRef.current) {
 			console.log("earth ready");
 			earthRef.current!.material = earthMat;
 		}
-	}, []);
+	}, [textures]);
 	useEffect(() => {
 		console.log(size);
 		if (size.width != 0) {

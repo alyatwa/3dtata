@@ -8,24 +8,33 @@ import { useSnapshot } from "valtio";
 import PlanetMaterial from "../../Logic/Materials/Planet";
 import useWindowSize from "../../utils/useWindowSize";
 import { addRotationControls } from "../mars/rotation.controls";
+import useTextures from "../../hooks/useTextures";
+import { useDynamicStates } from "../../components/Panel";
 
 export default function ModelGLB(props: any) {
-	const { enableAnimationLoop, playAnimation } = useSnapshot(state);
+	const { stateP } = useDynamicStates({
+		play: {
+			type: "playButton",
+			value: true,
+			label: "Play",
+		},
+	});
 	const { camera, gl, scene: _scene } = useThree();
 	gl.outputEncoding = THREE.sRGBEncoding;
 	gl.toneMapping = THREE.NoToneMapping;
 	
 	const size = useWindowSize();
-	const uStars = new THREE.TextureLoader().load(
-		"../../texture/mars/8k_stars.jpg"
-	);
-	//uStars.encoding = THREE.sRGBEncoding;
-
-	const uPlanet = new THREE.TextureLoader().load(
-		"../../texture/jupiter/2k_jupiter.jpg"
-	);
+	 ;
 	//uPlanet.encoding = THREE.sRGBEncoding;
+	const paths = useMemo(
+		() => ["../../texture/mars/8k_stars.jpg", "../../texture/jupiter/2k_jupiter.jpg"],
+		[]
+	);
 
+	const [textures, isLoading] = useTextures(paths, (loadedTextures) => {
+		console.log("All textures are loaded");
+	});
+	const [uStars, uPlanet] = textures;
 	const jupiterRef = useRef<any>();
 	const pointRef = useRef<any>();
 
@@ -57,20 +66,20 @@ export default function ModelGLB(props: any) {
 			uQuality: { value: Math.min(window.devicePixelRatio, 2) },
 			uResolution: { value: [window.innerWidth, window.innerHeight] },
 		}),
-		[]
+		[textures]
 	);
 	addRotationControls(uniforms, gl.domElement);
 	let jupiterMat = new PlanetMaterial(uniforms);
 	useFrame((state, delta) => {
 		uniforms.uAmbientLight.value = jupiter.uAmbientLight;
-		uniforms.uTime.value += playAnimation ? (uniforms.uRotationSpeed.value as number) * 0.1 : 0;
+		uniforms.uTime.value += (stateP.play?.value ?? true) ? (uniforms.uRotationSpeed.value as number) * 0.1 : 0;
 	});
 	useEffect(() => {
 		if (jupiterRef.current) {
 			console.log("jupiter ready");
 			jupiterRef.current!.material = jupiterMat;
 		}
-	}, []);
+	}, [textures]);
 	useEffect(() => {
 		console.log(size);
 		if (size.width != 0) {

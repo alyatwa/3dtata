@@ -16,7 +16,10 @@ import { useParams } from "react-router-dom";
 import { LayerMaterial, Color, Depth } from "lamina";
 import fake from "../../data/data.json";
 import BlurFX from "../../Logic/FX/BlurFX";
-import { usePanel } from "../../context/panel-context";
+//import { usePanel } from "../../context/panel-context";
+import { useSnapshot } from "valtio";
+import { state } from "../../context/panel-proxy";
+import { Spinner } from "@nextui-org/react";
 extend({ OrbitControls });
 
 /* const useStyles = makeStyles({
@@ -30,7 +33,7 @@ extend({ OrbitControls });
 }); */
 
 export default function Module() {
-	const { viewParticles } = usePanel();
+	const { isCanvasLoading } = useSnapshot(state);
 	/*const modules = useLocation().state;
  console.log(useLocation())
  const [currentModule, setModule] = useState(null);
@@ -72,7 +75,11 @@ export default function Module() {
 				collapsed={true} // default = false, when true the GUI is collpased
 				hidden={false} // default = false, when true the GUI is hidden
 			/>
-
+			{isCanvasLoading && (
+				<div className="z-10 absolute flex justify-center items-center w-full h-full bg-white">
+					<Spinner />
+				</div>
+			)}
 			<div className="w-full h-full absolute t-0 l-0">
 				<Canvas
 					gl={{

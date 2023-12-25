@@ -22,6 +22,7 @@ import fragmentShaderSunRay from "../../Logic/shaders/planet/sunRays/sunRays.fs.
 import vertexShaderSunRay from "../../Logic/shaders/planet/sunRays/sunRays.vs.glsl";
 
 import Controls from "./Controls";
+import useTextures from "../../hooks/useTextures";
 export default function ModelGLB(props: any) {
 	const { enableAnimationLoop, playAnimation } = useSnapshot(state);
 	const { camera, gl, scene: _scene } = useThree();
@@ -491,14 +492,16 @@ const SunGlow = ({ uVisibility, uDirection, uLightView }: any) => {
 } */
 
 const BG = () => {
-	const [isTextureLoaded, setIsTextureLoaded] = useState(false);
-	const uStars = new THREE.TextureLoader().load(
-		"../../texture/mars/8k_stars.jpg",
-		() => {
-			//setIsTextureLoaded(true);
-		}
-	);
+ 
+	const paths = useMemo(() =>["../../texture/mars/8k_stars.jpg"
+], []);
 
+const [textures, isLoading] = useTextures(paths, (loadedTextures) => {
+	console.log('All textures are loaded');
+  }); 
+  const [
+	uStars,
+] =  textures;
 	const starsRef = useRef<any>();
 	const uniforms = useMemo(
 		() => ({
@@ -509,16 +512,17 @@ const BG = () => {
 			uQuality: { value: Math.min(window.devicePixelRatio, 2) },
 			uResolution: { value: [window.innerWidth, window.innerHeight] },
 		}),
-		[]
+		[uStars]
 	);
 	useFrame((state) => {
 		if (starsRef.current) {
 			starsRef.current.rotation.y += 0.0001;
 		}
 	});
+	
 	return (
 		<>
-			{isTextureLoaded && (
+			{isLoading ? <color attach="background" args={[0x000000]} /> : (
 				<mesh rotation={[0, 0, 0, "XZY"]} ref={starsRef} renderOrder={1000}>
 					<sphereGeometry args={[500, 60, 60]} />
 					<shaderMaterial

@@ -8,23 +8,32 @@ import { useSnapshot } from "valtio";
 import PlanetMaterial from "../../Logic/Materials/Planet";
 import useWindowSize from "../../utils/useWindowSize";
 import { addRotationControls } from "../mars/rotation.controls";
+import useTextures from "../../hooks/useTextures";
+import { useDynamicStates } from "../../components/Panel";
 
 export default function ModelGLB(props: any) {
 	const { enableAnimationLoop, playAnimation } = useSnapshot(state);
 	const { camera, gl, scene: _scene } = useThree();
 	gl.outputEncoding = THREE.sRGBEncoding;
 	gl.toneMapping = THREE.NoToneMapping;
-	
+	const { stateP } = useDynamicStates({
+		play: {
+			type: "playButton",
+			value: true,
+			label: "Play",
+		},
+	});
 	const size = useWindowSize();
-	const uStars = new THREE.TextureLoader().load(
-		"../../texture/mars/8k_stars.jpg"
+	const paths = useMemo(
+		() => ["../../texture/mars/8k_stars.jpg", "../../texture/venus/2k_venus.jpg"],
+		[]
 	);
-	//uStars.encoding = THREE.sRGBEncoding;
 
-	const uPlanet = new THREE.TextureLoader().load(
-		"../../texture/venus/2k_venus.jpg"
-	);
-	//uPlanet.encoding = THREE.sRGBEncoding;
+	const [textures, isLoading] = useTextures(paths, (loadedTextures) => {
+		console.log("All textures are loaded");
+	});
+	const [uStars, uPlanet] = textures;
+	 
 
 	const venusRef = useRef<any>();
 	const pointRef = useRef<any>();
@@ -57,20 +66,20 @@ export default function ModelGLB(props: any) {
 			uQuality: { value: Math.min(window.devicePixelRatio, 2) },
 			uResolution: { value: [window.innerWidth, window.innerHeight] },
 		}),
-		[]
+		[textures]
 	);
 	addRotationControls(uniforms, gl.domElement);
 	let venusMat = new PlanetMaterial(uniforms);
 	useFrame((state, delta) => {
 		uniforms.uAmbientLight.value = venus.uAmbientLight;
-		uniforms.uTime.value += playAnimation ? (uniforms.uRotationSpeed.value as number) * 0.1 : 0;
+		uniforms.uTime.value += (stateP.play?.value ?? true) ? (uniforms.uRotationSpeed.value as number) * 0.1 : 0;
 	});
 	useEffect(() => {
 		if (venusRef.current) {
 			console.log("venus ready");
 			venusRef.current!.material = venusMat;
 		}
-	}, []);
+	}, [textures]);
 	useEffect(() => {
 		console.log(size);
 		if (size.width != 0) {

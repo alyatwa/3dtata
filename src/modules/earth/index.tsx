@@ -1,33 +1,40 @@
-import {
-	useFrame,
-	useLoader,
-	useThree,
-} from "@react-three/fiber";
+import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 
 import { useControls } from "leva";
 import { state } from "../../context/panel-proxy";
 import { useSnapshot } from "valtio";
 import Controls from "./Controls";
+import useTextures from "../../hooks/useTextures";
+import { useDynamicStates } from "../../components/Panel";
 
 export default function ModelGLB(props: any) {
-	const { enableAnimationLoop, playAnimation } = useSnapshot(state);
 	const { camera, gl, scene: _scene, size } = useThree();
 	gl.outputEncoding = THREE.sRGBEncoding;
 	gl.toneMapping = THREE.NoToneMapping;
-	const earthMat =  useLoader(THREE.TextureLoader, "../../texture/earth/earthmap1k.jpg");
 
-	//earthMat.encoding = THREE.sRGBEncoding;
-
-	const cloudMat = new THREE.TextureLoader().load(
-		"../../texture/earth/earthCloud.png"
+	const { stateP } = useDynamicStates({
+		play: {
+			type: "playButton",
+			value: true,
+			label: "Play",
+		},
+	});
+	const paths = useMemo(
+		() => [
+			"../../texture/earth/earthmap1k.jpg",
+			"../../texture/earth/earthCloud.png",
+			"../../texture/earth/earthbump.jpg",
+			"../../texture/earth/galaxy.png",
+		],
+		[]
 	);
-	cloudMat.encoding = THREE.sRGBEncoding;
 
-	const earthbumpMat = useLoader(THREE.TextureLoader, "../../texture/earth/earthbump.jpg");
-
-	//earthbumpMat.encoding = THREE.sRGBEncoding;
+	const [textures, isLoading] = useTextures(paths, (loadedTextures) => {
+		console.log("All textures are loaded");
+	});
+	const [earthMat, cloudMat, earthbumpMat, uStars] = textures;
 
 	const ref = useRef<any>();
 	const pointRef = useRef<any>();
@@ -49,11 +56,19 @@ export default function ModelGLB(props: any) {
 		{ collapsed: true }
 	);
 	useFrame((state, delta) => {
+		if(stateP.play?.value ?? true){
+		if (starMesh.current)
 		starMesh.current!.rotation.y -= 0.002;
+
+		if (earthMesh.current)
 		earthMesh.current!.rotation.y -= 0.0015;
-		cloudMesh.current!.rotation.y -= 0.001;
+
+		if (cloudMesh.current)
+		cloudMesh.current!.rotation.y -= 0.001;}
 	});
 	return (
+		<>
+		{isLoading ? <color attach="background" args={[0x000000]} /> :
 		<>
 			<mesh ref={earthMesh} visible>
 				<sphereGeometry args={[0.6, 32, 32]} />
@@ -70,7 +85,7 @@ export default function ModelGLB(props: any) {
 			<mesh ref={starMesh} visible>
 				<sphereGeometry args={[80, 64, 64]} />
 				<meshBasicMaterial
-					map={new THREE.TextureLoader().load("../../texture/earth/galaxy.png")}
+					map={uStars}
 					side={THREE.BackSide}
 				/>
 			</mesh>
@@ -83,6 +98,6 @@ export default function ModelGLB(props: any) {
 			/>
 			<Controls target={new THREE.Vector3(earth.x, earth.y, earth.z)} />
 			{/* */}
-		</>
+		</>}</>
 	);
 }

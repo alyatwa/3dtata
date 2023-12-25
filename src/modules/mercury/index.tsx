@@ -8,24 +8,31 @@ import { useSnapshot } from "valtio";
 import PlanetMaterial from "../../Logic/Materials/Planet";
 import useWindowSize from "../../utils/useWindowSize";
 import { addRotationControls } from "../mars/rotation.controls";
+import useTextures from "../../hooks/useTextures";
+import { useDynamicStates } from "../../components/Panel";
 
 export default function ModelGLB(props: any) {
-	const { enableAnimationLoop, playAnimation } = useSnapshot(state);
+	//const { enableAnimationLoop, playAnimation } = useSnapshot(state);
 	const { camera, gl, scene: _scene } = useThree();
 	gl.outputEncoding = THREE.sRGBEncoding;
 	gl.toneMapping = THREE.NoToneMapping;
-	
-	const size = useWindowSize();
-	const uStars = new THREE.TextureLoader().load(
-		"../../texture/mars/8k_stars.jpg"
+	const { stateP } = useDynamicStates({
+		play: {
+			type: "playButton",
+			value: true,
+			label: "Play",
+		},
+	});
+	const size = useWindowSize(); 
+	const paths = useMemo(
+		() => ["../../texture/mars/8k_stars.jpg", "../../texture/mercury/2k_mercury.jpg"],
+		[]
 	);
-	//uStars.encoding = THREE.sRGBEncoding;
 
-	const uPlanet = new THREE.TextureLoader().load(
-		"../../texture/mercury/2k_mercury.jpg"
-	);
-	//uPlanet.encoding = THREE.sRGBEncoding;
-
+	const [textures, isLoading] = useTextures(paths, (loadedTextures) => {
+		console.log("All textures are loaded");
+	});
+	const [uStars, uPlanet] = textures;
 	const mercuryRef = useRef<any>();
 	const pointRef = useRef<any>();
 
@@ -53,23 +60,22 @@ export default function ModelGLB(props: any) {
 			uQuality: { value: Math.min(window.devicePixelRatio, 2) },
 			uResolution: { value: [window.innerWidth, window.innerHeight] },
 		}),
-		[]
+		[textures]
 	);
 	addRotationControls(uniforms, gl.domElement);
 	let mercuryMat = new PlanetMaterial(uniforms);
 	useFrame((state, delta) => {
 		uniforms.uSunIntensity.value = mercury.uSunIntensity;
 		uniforms.uAmbientLight.value = mercury.uAmbientLight;
-		uniforms.uTime.value += playAnimation ? (uniforms.uRotationSpeed.value as number) * 0.1 : 0;
+		uniforms.uTime.value += (stateP.play?.value ?? true) ? (uniforms.uRotationSpeed.value as number) * 0.1 : 0;
 	});
 	useEffect(() => {
 		if (mercuryRef.current) {
 			console.log("mercury ready");
 			mercuryRef.current!.material = mercuryMat;
 		}
-	}, []);
-	useEffect(() => {
-		console.log(size);
+	}, [textures]);
+	useEffect(() => { 
 		if (size.width != 0) {
 			const quality = uniforms.uQuality.value;
 			gl.setSize(size.width * quality, size.height * quality);
