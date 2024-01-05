@@ -26,6 +26,7 @@ import { proxy, subscribe, useSnapshot } from "valtio";
 import { state } from "../context/panel-proxy";
 import { AnaglyphEffect } from "three-stdlib";
 import AudioPlayer from "./AudioPlayer";
+import InfoPanel from "./InfoPanel";
 
 type Control = {
 	initialValue?: any;
@@ -55,11 +56,17 @@ type CheckboxControl = Control & {
 	value: any;
 };
 
+type SwitchControl = Control & {
+	type: "switch";
+	value: any;
+};
+
 type StateType = {
 	[key: string]:
 		| PlayButtonControl
 		| CheckboxControl
 		| SliderControl
+		| SwitchControl
 		| AudioControl;
 };
 
@@ -169,8 +176,12 @@ const Panel = (props: any) => {
 	return (
 		<>
 			{viewModules && (
-				<div className="absolute bottom-0 w-[500px] mb-2 ml-2 z-[103]" ><Modules data={props.course} /></div>
+				<div className="absolute bottom-0 w-[500px] mb-2 ml-2 z-[103]">
+					<Modules data={props.course} />
+				</div>
 			)}
+
+			{props && (snapshot.infoCards?.value ?? false) && (<InfoPanel cards={props.metadata.cards}/>)}
 			<div className="absolute top-1/2 transform -translate-y-1/2 right-0 w-[250px] mr-[15px] z-[101] ">
 				<div className="flex justify-end">
 					<Button
@@ -258,6 +269,20 @@ const Panel = (props: any) => {
 														{checkboxControl.label || key}
 													</Checkbox>
 												);
+											case "switch":
+												const switchControl = stateP[key] as SwitchControl;
+												return (
+													<Switch
+														size="sm"
+														isSelected={switchControl.value as boolean}
+														key={key}
+														onChange={(ev) =>
+															(switchControl.value = ev.currentTarget.checked)
+														}
+													>
+														{switchControl.label || key}
+													</Switch>
+												);
 											case "audioPlayer":
 												const audioControl = stateP[key] as AudioControl;
 												return (
@@ -266,7 +291,6 @@ const Panel = (props: any) => {
 														audioSrc={audioControl.value}
 													/>
 												);
-
 											default:
 												return null;
 										}
@@ -281,7 +305,7 @@ const Panel = (props: any) => {
 								variant={viewModules ? "light" : "bordered"}
 								onClick={() => handleViewModules()}
 							>
-								{viewModules ? "Hide modules" : "View modules"}
+								{viewModules ? "Hide lessons" : "View lessons"}
 							</Button>
 							<Button
 								disableRipple

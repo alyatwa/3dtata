@@ -88,7 +88,7 @@ const AudioPlayer = ({ audioSrc }: { audioSrc: string }) => {
 									/>
                                      <div className="flex justify-between">
                 <p className="text-small">{`${Math.floor(trackProgress / 60)}:${(trackProgress % 60).toFixed(0).toString().padStart(2, '0')}`}</p>
-                <p className="text-small text-foreground/50">{`${Math.floor(duration / 60)}:${(duration % 60).toString().padStart(2, '0')}`}</p>
+                <p className="text-small text-foreground/50">{`${Math.floor(duration / 60)}:${Math.round((duration % 60)).toString().padStart(2, '0')}`}</p>
               </div>
 								</div>
 

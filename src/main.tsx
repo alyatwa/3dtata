@@ -11,12 +11,10 @@ import { PanelProvider } from "./context/panel-context";
 
 root.render(
 	<React.StrictMode>
-		<NextUIProvider>
 			<BrowserRouter>
 				<PanelProvider>
 					<App />
 				</PanelProvider>
 			</BrowserRouter>
-		</NextUIProvider>
 	</React.StrictMode>
 );

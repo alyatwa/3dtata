@@ -371,8 +371,13 @@ const Planet = ({
 			step: 0.5,
 		},
 		annotation: {
-			label: "Planet Name",
-			type: "checkbox",
+			label: "Show Planet Name",
+			type: "switch",
+			value: false,
+		},
+		infoCards: {
+			label: "Show Cards",
+			type: "switch",
 			value: false,
 		},
 		audio: {

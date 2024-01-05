@@ -22,6 +22,11 @@ export default function ModelGLB(props: any) {
 			value: true,
 			label: "Play",
 		},
+		audio: {
+			type: "audioPlayer",
+			value:
+				"https://res.cloudinary.com/recapdataebse/video/upload/v1703837999/3dtata/venus_enwid7.mp3",
+		},
 	});
 	const size = useWindowSize();
 	const paths = useMemo(

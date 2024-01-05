@@ -20,6 +20,7 @@ import BlurFX from "../../Logic/FX/BlurFX";
 import { useSnapshot } from "valtio";
 import { state } from "../../context/panel-proxy";
 import { Spinner } from "@nextui-org/react";
+import InfoPanel from "../../components/InfoPanel";
 extend({ OrbitControls });
 
 /* const useStyles = makeStyles({
@@ -41,7 +42,8 @@ export default function Module() {
 	//const classes = useStyles();
 	const params = useParams();
 	//const makeEvent: any = useRef(null);
-	const course = fake.find((x) => x.slug === params.courseId);
+	const course = fake.find((x) => x.slug === params.classId);
+	console.log(params)
 	// @ts-ignore
 	const module = course?.modules.find((x) => x.slug! === params.moduleId);
 	if (!module) {
@@ -96,16 +98,14 @@ export default function Module() {
 						<ModelGLB receiveShadow castShadow />
 					</Suspense>
 
-					{/* 	<Effect /> 
-					<ambientLight intensity={10} />*/}
-
-					{/**/}
+				 
 					<Environment files="../../venice_sunset_1k.hdr" />
 				</Canvas>
 			</div>
 
 			<div>
 				<Panel metadata={currentModule} course={course} />
+				
 			</div>
 		</div>
 	);
