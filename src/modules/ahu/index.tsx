@@ -1,3 +1,4 @@
+'use client';
 import { useLoader, useThree } from "@react-three/fiber";
 import Resources from "../../Logic/Resources";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";

@@ -1,5 +1,6 @@
+"use client"
 import { useRef, useState, useEffect, useContext } from "react";
-import Modules from "../pages/Module/Modules";
+import Modules from "../_pages/Lesson/Modules";
 import {
 	Maximize2,
 	Minimize2,
@@ -9,7 +10,8 @@ import {
 	Play,
 } from "react-feather";
 import useSound from "use-sound";
-import fullscreenSfx from "/sounds/Blow.mp3";
+import fullscreenSfx from "../../public/sounds/Blow.mp3";
+
 import {
 	Button,
 	Card,

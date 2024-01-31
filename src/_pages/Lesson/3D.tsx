@@ -33,27 +33,12 @@ extend({ OrbitControls });
 	},
 }); */
 
-export default function Module() {
+export default function ThreeDLesson({currentLesson, _class}:{_class:any; currentLesson:any}) {
 	const { isCanvasLoading } = useSnapshot(state);
-	/*const modules = useLocation().state;
- console.log(useLocation())
- const [currentModule, setModule] = useState(null);
- (!currentModule && setModule(modules[0]))*/
-	//const classes = useStyles();
-	const params = useParams();
-	//const makeEvent: any = useRef(null);
-	const course = fake.find((x) => x.slug === params.classId);
-	console.log(params)
-	// @ts-ignore
-	const module = course?.modules.find((x) => x.slug! === params.moduleId);
-	if (!module) {
-		console.error("module not found");
-		return <p>module not found</p>;
-	}
-	const [currentModule, setModule] = useState<any | null>(null);
-	!currentModule && setModule(module);
+    
+	
 	const ModelGLB = lazy(
-		() => import(`../../modules/${currentModule!.moduleSource}/index.tsx`)
+		() => import(`../../modules/${currentLesson!.moduleSource}/index.tsx`)
 	);
 
 	const optionsCam = useMemo(() => {
@@ -104,7 +89,7 @@ export default function Module() {
 			</div>
 
 			<div>
-				<Panel metadata={currentModule} course={course} />
+				<Panel metadata={currentLesson} course={_class} />
 				
 			</div>
 		</div>

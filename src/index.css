@@ -1,35 +1,53 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities; 
- 
- * {
+@tailwind utilities;
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Sora', sans-serif;
 }
 
+h1 {
+  font-family: var(--font-nunito);
+}
 body {
-    margin: 0;
-  padding: 0; 
+  margin: 0;
+  padding: 0;
+}
+iframe {
+  @apply w-full h-[500px];
+}
+canvas {
+  background: linear-gradient(180deg, #e6eaf5 0%, #f6f6f6 80%);
+}
+.kg-card {
+  @apply flex rounded-2xl py-4 px-6 !my-8;
+}
+.kg-callout-emoji {
+  @apply pr-3 text-lg;
+}
+.kg-callout-card-yellow {
+  @apply bg-amber-300;
 }
 
-canvas { 
-background: linear-gradient(180deg, #e6eaf5 0%, #f6f6f6 80%);
-}
 @layer utilities {
-    /* Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-    .no-scrollbar {
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
-    }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
+
 @layer base {
   html {
+    --color-primary: #503e9d;
+    --color-secondary: #150a14;
+
     @apply scroll-smooth;
   }
 }

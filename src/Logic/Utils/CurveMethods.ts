@@ -1,40 +1,38 @@
-import * as THREE from 'three';
-import { loadJSON } from './JSONHelper.js';
+import * as THREE from "three";
+import { loadJSON } from "./JSONHelper";
 
-export async function loadCurveFromJSON(jsonPath:any) {
-	
+export async function loadCurveFromJSON(jsonPath: any) {
 	let curveJSON = await loadJSON(jsonPath);
 	let curve = createCurveFromJSON(curveJSON);
-	//let curveTubeMesh = getTubeFromCurve(curve); 
+	//let curveTubeMesh = getTubeFromCurve(curve);
 
 	let curveAndMesh = {
 		curve: curve,
 		//mesh: curveTubeMesh
-	}
-	return curveAndMesh
+	};
+	return curveAndMesh;
 }
 
-export function createCurveFromJSON(json:any) {
-
+export function createCurveFromJSON(json: any) {
 	// Extract the vertices array from the JSON object
-    const vertices = json.points;
-    
-    // Create an empty array to store THREE.Vector3 instances
-    const points = [];
+	const vertices = json.points;
 
-    // Iterate over the vertices and push THREE.Vector3 instances to the points array
-    for (let i = 0; i < vertices.length; i += 3) {
+	// Create an empty array to store THREE.Vector3 instances
+	const points = [];
+
+	// Iterate over the vertices and push THREE.Vector3 instances to the points array
+	for (let i = 0; i < vertices.length; i += 3) {
 		const x = vertices[i].x;
-        const y = vertices[i].y;
-        const z =  vertices[i].z;
-        points.push(new THREE.Vector3(x, y, z));
-    }
-    
-    // Create a CatmullRomCurve3 using the points array
-    const curve = new THREE.CatmullRomCurve3(points) as any
-    curve.closed = json.closed;
+		const y = vertices[i].y;
+		const z = vertices[i].z;
+		points.push(new THREE.Vector3(x, y, z));
+	}
 
-    return curve;
+	// Create a CatmullRomCurve3 using the points array
+	const curve = new THREE.CatmullRomCurve3(points) as any;
+	curve.closed = json.closed;
+
+	return curve;
 }
 
 /* function getTubeFromCurve(curve:THREE.CatmullRomCurve3){

@@ -1,21 +1,34 @@
-import { Button } from "@nextui-org/react";
-import React from "react"; 
-import { Menu } from "react-feather";
-import { Link as RouterLink, Outlet } from "react-router-dom"; 
+"use client";
 
+import { BreadcrumbItem, Breadcrumbs, Button } from "@nextui-org/react";
+import React from "react";
+import { Menu, ChevronRight } from "react-feather";
 
-const Header = () => {
-	return (
-		<div className="w-full inline-flex justify-between items-center mb-1 px-3">
-			<div className="flex flex-col gap-1">
-				<p className="text-xl font-bold">Good Morning</p>
-				<p className="text-sm font-light text-white/60">12 Class</p>
-			</div>
-				<Button isIconOnly className="bg-white/20" radius="full">
-					<Menu color="white" />
-				</Button>
-			</div>
-	);
+const Header = ({ tag, breadcrumbs }: { tag?: string; breadcrumbs: any[] }) => {
+  return (
+    <div className="w-full inline-flex justify-between items-center pt-2 bg-white px-3 sticky top-0">
+      <div className="flex flex-row items-center">
+        <Breadcrumbs
+          itemClasses={{
+            separator: "rotate-180",
+          }}
+        >
+          {breadcrumbs.map((item) => (
+            <BreadcrumbItem key={item.link} href={item.link}>
+              {item.title}
+            </BreadcrumbItem>
+          ))}
+        </Breadcrumbs>
+      </div>
+      <Button
+        isIconOnly
+        className="hover:bg-indigo-600/10 bg-white"
+        radius="full"
+      >
+        <Menu className="text-primary" />
+      </Button>
+    </div>
+  );
 };
 
 export default Header;

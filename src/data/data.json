@@ -1,5 +1,4 @@
 [
-	
 	{
 		"id": "space",
 		"slug": "space",
@@ -8,10 +7,11 @@
 		"modules": [
 			{
 				"id": "uyyghgfghjnb",
-				"slug":"f9",
+				"slug": "f9",
 				"title": "Falcon 9",
 				"img": "../../lessons/falcon9.jpg",
-				"controls": [
+				"contentType":"3d",
+"controls": [
 					{
 						"id": "jjgncddfrd",
 						"type": "enableLoop",
@@ -24,17 +24,17 @@
 						"event": "playAnimation",
 						"label": "Play Animation"
 					}
-		
 				],
 				"description": " ",
 				"moduleSource": "f9"
 			},
 			{
 				"id": "uyygb",
-				"slug":"earth",
+				"slug": "earth",
 				"title": "Earth",
 				"img": "../../lessons/earth.png",
-				"controls": [
+				"contentType":"3d",
+"controls": [
 					{
 						"id": "jjgncddfrd",
 						"type": "enableLoop",
@@ -47,176 +47,192 @@
 						"event": "playAnimation",
 						"label": "Play Animation"
 					}
-		
 				],
 				"description": "",
 				"moduleSource": "earth"
 			},
 			{
 				"id": "ddddfdfdf",
-				"slug":"mars",
+				"slug": "mars",
 				"title": "Mars",
 				"img": "../../lessons/mars.png",
-				"controls": [
+				"contentType":"3d",
+"controls": [
 					{
 						"id": "vgtyyh",
 						"type": "playAnimation",
 						"event": "playAnimation",
 						"label": "Play Animation"
 					}
-		
 				],
 				"description": "mars",
 				"moduleSource": "mars"
 			},
 			{
 				"id": "mon56",
-				"slug":"moon",
+				"slug": "moon",
 				"title": "Moon",
 				"img": "../../lessons/moon.png",
-				"controls": [
+				"contentType":"3d",
+"controls": [
 					{
 						"id": "vgtyyh",
 						"type": "playAnimation",
 						"event": "playAnimation",
 						"label": "Play Animation"
 					}
-		
 				],
 				"description": "moon",
 				"moduleSource": "moon"
 			},
 			{
 				"id": "dvenus6",
-				"slug":"venus",
+				"slug": "venus",
 				"title": "Venus",
 				"img": "../../lessons/venus.png",
-				"controls": [
+				"contentType":"3d",
+"controls": [
 					{
 						"id": "vgtyyh",
 						"type": "playAnimation",
 						"event": "playAnimation",
 						"label": "Play Animation"
 					}
-		
 				],
 				"description": "venus",
 				"moduleSource": "venus"
 			},
 			{
 				"id": "jupiter6",
-				"slug":"jupiter",
+				"slug": "jupiter",
 				"title": "Jupiter",
 				"img": "../../lessons/jupiter.png",
-				"controls": [
+				"contentType":"3d",
+"controls": [
 					{
 						"id": "vgtyyh",
 						"type": "playAnimation",
 						"event": "playAnimation",
 						"label": "Play Animation"
 					}
-		
 				],
 				"description": "jupiter",
 				"moduleSource": "jupiter"
 			},
 			{
 				"id": "mercury6",
-				"slug":"mercury",
+				"slug": "mercury",
 				"title": "Mercury",
 				"img": "../../lessons/mercury.png",
-				"controls": [
+				"contentType":"3d",
+"controls": [
 					{
 						"id": "vgtyyh",
 						"type": "playAnimation",
 						"event": "playAnimation",
 						"label": "Play Animation"
 					}
-		
 				],
 				"description": "mercury",
 				"moduleSource": "mercury"
 			},
 			{
 				"id": "earthgl",
-				"slug":"earth-gl",
+				"slug": "earth-gl",
 				"title": "Earth",
 				"img": "../../lessons/earth.png",
-				"controls": [
+				"contentType":"3d",
+"controls": [
 					{
 						"id": "vgtyyh",
 						"type": "playAnimation",
 						"event": "playAnimation",
 						"label": "Play Animation"
 					}
-		
 				],
 				"description": "earth",
 				"moduleSource": "earth-gl"
 			},
 			{
 				"id": "solarSystem",
-				"slug":"solar-system",
+				"slug": "solar-system",
 				"title": "Solar System",
 				"img": "../../lessons/solar.png",
-				"controls": [
+				"contentType":"3d",
+"controls": [
 					{
 						"id": "vgtyyh",
 						"type": "playAnimation",
 						"event": "playAnimation",
 						"label": "Play Animation"
 					}
-		
 				],
-				"cards":[{
-					"infoAr":"",
-					"infoEn":"Earth rotates or spins around its axis, which gives us day and night."
-				},
-				{
-					"infoAr":"",
-					"infoEn":"Jupiter is the largest planet, and Mercury is the smallest"
-				},
-				{
-					"infoAr":"",
-					"infoEn":"The sun is a big, hot ball of glowing gases at the center of the solar system."
-				},
-				{
-					"infoAr":"",
-					"infoEn":"Earth has one moon, and some planets have many moons."
-				},
-				{
-
-					"infoAr":"",
-					"infoEn":"Planets move around the sun in paths called orbits."
-				},
-				{
-					"infoAr":"",
-					"infoEn":"Moons are like mini-planets that go around bigger planets."
-				},
-				{
-					"infoAr":"",
-					"infoEn":"Comets are icy objects that also orbit the sun. They have a bright tail when they get close to the sun."
-				}
-			],
+				"cards": [
+					{
+						"infoAr": "",
+						"infoEn": "Earth rotates or spins around its axis, which gives us day and night."
+					},
+					{
+						"infoAr": "",
+						"infoEn": "Jupiter is the largest planet, and Mercury is the smallest"
+					},
+					{
+						"infoAr": "",
+						"infoEn": "The sun is a big, hot ball of glowing gases at the center of the solar system."
+					},
+					{
+						"infoAr": "",
+						"infoEn": "Earth has one moon, and some planets have many moons."
+					},
+					{
+						"infoAr": "",
+						"infoEn": "Planets move around the sun in paths called orbits."
+					},
+					{
+						"infoAr": "",
+						"infoEn": "Moons are like mini-planets that go around bigger planets."
+					},
+					{
+						"infoAr": "",
+						"infoEn": "Comets are icy objects that also orbit the sun. They have a bright tail when they get close to the sun."
+					}
+				],
 				"description": "solar System",
 				"moduleSource": "solar-system"
 			},
 			{
 				"id": "sun",
-				"slug":"sun",
+				"slug": "sun",
 				"title": "Sun",
 				"img": "../../lessons/sun.jpg",
-				"controls": [
+				"contentType":"3d",
+"controls": [
 					{
 						"id": "vgtyyh",
 						"type": "playAnimation",
 						"event": "playAnimation",
 						"label": "Play Animation"
 					}
-		
 				],
 				"description": "sun",
 				"moduleSource": "sun"
+			}
+		]
+	},
+	{
+		"id": "math",
+		"slug": "math",
+		"img": "https://res.cloudinary.com/recapdataebse/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1704476984/3dtata/classes/space_ekuath.jpg?_s=public-apps",
+		"title": "Math",
+		"modules": [
+			{
+				"id": "cfgb",
+				"contentType":"article",
+				"slug": "triangle",
+				"title": "Triangle",
+				"img": "../../lessons/earth.png",
+				"description": " ",
+				"moduleSource": "math"
 			}
 		]
 	}

@@ -1,3 +1,4 @@
+"use client";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { useEffect, useMemo, useRef } from "react";
@@ -11,7 +12,7 @@ import { addRotationControls } from "../mars/rotation.controls";
 import useTextures from "../../hooks/useTextures";
 import { useDynamicStates } from "../../components/Panel";
 
-export default function ModelGLB(props: any) {
+export default function ModelGLB(props?: any) {
 	const { enableAnimationLoop, playAnimation } = useSnapshot(state);
 	const { camera, gl, scene: _scene } = useThree();
 	//gl.outputEncoding = THREE.sRGBEncoding;
@@ -24,48 +25,94 @@ export default function ModelGLB(props: any) {
 		},
 	});
 	const size = useWindowSize();
-  
+
 	const paths = useMemo(
-		() => ["../../texture/mars/8k_stars.jpg", "../../texture/earth-gl/2k_earth_color.jpg",
-		"../../texture/earth-gl/2k_earth_bump.jpg","../../texture/earth-gl/2k_earth_clouds.jpg",
-		"../../texture/earth-gl/2k_earth_specular.jpg", "../../texture/earth-gl/2k_earth_night.jpg"
-	
-	],
+		() => [
+			"../../texture/mars/8k_stars.jpg",
+			"../../texture/earth-gl/2k_earth_color.jpg",
+			"../../texture/earth-gl/2k_earth_bump.jpg",
+			"../../texture/earth-gl/2k_earth_clouds.jpg",
+			"../../texture/earth-gl/2k_earth_specular.jpg",
+			"../../texture/earth-gl/2k_earth_night.jpg",
+		],
 		[]
 	);
 
 	const [textures, isLoading] = useTextures(paths, (loadedTextures) => {
 		console.log("All textures are loaded");
 	});
-	const [uStars, uEarthColor, uEarthBump, uEarthClouds, uEarthSpecular, uEarthNight] = textures;
-	 
+	const [
+		uStars,
+		uEarthColor,
+		uEarthBump,
+		uEarthClouds,
+		uEarthSpecular,
+		uEarthNight,
+	] = textures;
+
 	const earthRef = useRef<any>();
 	const pointRef = useRef<any>();
 
 	const [earth, set] = useControls(
 		"Main",
 		() => ({
-			uAmbientLight: {label:"Amb Light", value: 0.05, min: 0, max: 5, step: 0.001 },
-			uSunIntensity: {label:"Sun Intensity", value: 1, min: 0, max: 5, step: 0.01 },
-			uCloudsScale: {label:"Clouds Scale", value: -1, min: -1, max: 5, step: 0.1 },
-			uCloudsSpeed: {label:"Clouds Speed", value: -1, min: -1, max: 5, step: 0.1 },
-			uCloudsDensity: {label:"Clouds density", value: 0.3, min: 0.1, max: 1, step: 0.01 },
-			uAtmosphereDensity: {label:"Atmo density", value: 0.3, min: 0.1, max: 5, step: 0.1 },
+			uAmbientLight: {
+				label: "Amb Light",
+				value: 0.05,
+				min: 0,
+				max: 5,
+				step: 0.001,
+			},
+			uSunIntensity: {
+				label: "Sun Intensity",
+				value: 1,
+				min: 0,
+				max: 5,
+				step: 0.01,
+			},
+			uCloudsScale: {
+				label: "Clouds Scale",
+				value: -1,
+				min: -1,
+				max: 5,
+				step: 0.1,
+			},
+			uCloudsSpeed: {
+				label: "Clouds Speed",
+				value: -1,
+				min: -1,
+				max: 5,
+				step: 0.1,
+			},
+			uCloudsDensity: {
+				label: "Clouds density",
+				value: 0.3,
+				min: 0.1,
+				max: 1,
+				step: 0.01,
+			},
+			uAtmosphereDensity: {
+				label: "Atmo density",
+				value: 0.3,
+				min: 0.1,
+				max: 5,
+				step: 0.1,
+			},
 		}),
 
 		{ collapsed: true }
 	);
 	const uniforms = useMemo(
 		() => ({
-		 uCloudsSpeed: {value:earth.uCloudsSpeed},
-		 uCloudsScale: {value: earth.uCloudsScale},
-		 uCloudsDensity: {value: earth.uCloudsDensity},
-			uSunIntensity: {value: 3},
-			uBumpStrength: {value: 0.005},
-			uAtmosphereDensity: {value: earth.uAtmosphereDensity},
-			uAtmosphereColor: {value: [0.05, 0.3, 0.9]},
-			uAmbientLight: {value: earth.uAmbientLight},
-			uRotationOffset: {value: 0.6},
+			uCloudsSpeed: { value: earth.uCloudsSpeed },
+			uCloudsScale: { value: earth.uCloudsScale },
+			uCloudsDensity: { value: earth.uCloudsDensity },
+			uSunIntensity: { value: 3 },
+			uBumpStrength: { value: 0.005 },
+			uAtmosphereDensity: { value: earth.uAtmosphereDensity },
+			uAtmosphereColor: { value: [0.05, 0.3, 0.9] },
+			uAmbientLight: { value: earth.uAmbientLight },
+			uRotationOffset: { value: 0.6 },
 			uRotationSpeed: { value: 0.1 },
 			uTime: { value: 0 },
 			uStars: { value: uStars },
@@ -88,7 +135,10 @@ export default function ModelGLB(props: any) {
 		uniforms.uCloudsScale.value = earth.uCloudsScale;
 		uniforms.uSunIntensity.value = earth.uSunIntensity;
 		uniforms.uAmbientLight.value = earth.uAmbientLight;
-		uniforms.uTime.value += (stateP.play?.value ?? true) ? (uniforms.uRotationSpeed.value as number) * 0.1 : 0;
+		uniforms.uTime.value +=
+			stateP.play?.value ?? true
+				? (uniforms.uRotationSpeed.value as number) * 0.1
+				: 0;
 	});
 	useEffect(() => {
 		if (earthRef.current) {
@@ -125,7 +175,7 @@ export default function ModelGLB(props: any) {
 						itemSize={3}
 					/>
 				</bufferGeometry>
-			</mesh> 
+			</mesh>
 		</>
 	);
 }

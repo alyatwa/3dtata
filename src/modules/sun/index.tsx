@@ -1,3 +1,4 @@
+"use client";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -7,19 +8,19 @@ import { state } from "../../context/panel-proxy";
 import { useSnapshot } from "valtio";
 import PlanetMaterial from "../../Logic/Materials/Planet";
 import useWindowSize from "../../utils/useWindowSize";
-import vertexShaderPerlinCube from "../../Logic/shaders/planet/perlinCube/perlinCube.vs.glsl";
-import fragmentShaderPerlinCube from "../../Logic/shaders/planet/perlinCube/perlinCube.fs.glsl";
-import fragmentShaderSun from "../../Logic/shaders/planet/sunSphere/sunSphere.fs.glsl";
-import vertexShaderSun from "../../Logic/shaders/planet/sunSphere/sunSphere.vs.glsl";
+import vertexShaderPerlinCube from "raw-loader!glslify-loader!../../Logic/shaders/planet/perlinCube/perlinCube.vs.glsl";
+import fragmentShaderPerlinCube from "raw-loader!glslify-loader!../../Logic/shaders/planet/perlinCube/perlinCube.fs.glsl";
+import fragmentShaderSun from "raw-loader!glslify-loader!../../Logic/shaders/planet/sunSphere/sunSphere.fs.glsl";
+import vertexShaderSun from "raw-loader!glslify-loader!../../Logic/shaders/planet/sunSphere/sunSphere.vs.glsl";
 
-import fragmentShaderSunFlare from "../../Logic/shaders/planet/sunFlares/sunFlares.fs.glsl";
-import vertexShaderSunFlare from "../../Logic/shaders/planet/sunFlares/sunFlares.vs.glsl";
+import fragmentShaderSunFlare from "raw-loader!glslify-loader!../../Logic/shaders/planet/sunFlares/sunFlares.fs.glsl";
+import vertexShaderSunFlare from "raw-loader!glslify-loader!../../Logic/shaders/planet/sunFlares/sunFlares.vs.glsl";
 
-import fragmentShaderSunGlow from "../../Logic/shaders/planet/sunGlow/glow.fs.glsl";
-import vertexShaderSunGlow from "../../Logic/shaders/planet/sunGlow/glow.vs.glsl";
+import fragmentShaderSunGlow from "raw-loader!glslify-loader!../../Logic/shaders/planet/sunGlow/glow.fs.glsl";
+import vertexShaderSunGlow from "raw-loader!glslify-loader!../../Logic/shaders/planet/sunGlow/glow.vs.glsl";
 
-import fragmentShaderSunRay from "../../Logic/shaders/planet/sunRays/sunRays.fs.glsl";
-import vertexShaderSunRay from "../../Logic/shaders/planet/sunRays/sunRays.vs.glsl";
+import fragmentShaderSunRay from "raw-loader!glslify-loader!../../Logic/shaders/planet/sunRays/sunRays.fs.glsl";
+import vertexShaderSunRay from "raw-loader!glslify-loader!../../Logic/shaders/planet/sunRays/sunRays.vs.glsl";
 
 import Controls from "./Controls";
 import useTextures from "../../hooks/useTextures";
@@ -492,16 +493,12 @@ const SunGlow = ({ uVisibility, uDirection, uLightView }: any) => {
 } */
 
 const BG = () => {
- 
-	const paths = useMemo(() =>["../../texture/mars/8k_stars.jpg"
-], []);
+	const paths = useMemo(() => ["../../texture/mars/8k_stars.jpg"], []);
 
-const [textures, isLoading] = useTextures(paths, (loadedTextures) => {
-	console.log('All textures are loaded');
-  }); 
-  const [
-	uStars,
-] =  textures;
+	const [textures, isLoading] = useTextures(paths, (loadedTextures) => {
+		console.log("All textures are loaded");
+	});
+	const [uStars] = textures;
 	const starsRef = useRef<any>();
 	const uniforms = useMemo(
 		() => ({
@@ -519,10 +516,12 @@ const [textures, isLoading] = useTextures(paths, (loadedTextures) => {
 			starsRef.current.rotation.y += 0.0001;
 		}
 	});
-	
+
 	return (
 		<>
-			{isLoading ? <color attach="background" args={[0x000000]} /> : (
+			{isLoading ? (
+				<color attach="background" args={[0x000000]} />
+			) : (
 				<mesh rotation={[0, 0, 0, "XZY"]} ref={starsRef} renderOrder={1000}>
 					<sphereGeometry args={[500, 60, 60]} />
 					<shaderMaterial

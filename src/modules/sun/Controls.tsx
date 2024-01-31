@@ -1,3 +1,4 @@
+"use client";
 import { OrbitControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import { useControls } from "leva";
@@ -17,23 +18,23 @@ const Controls = () => {
 		maxZoom: { value: 400, min: 0, max: 400, step: 1 },
 		//cameraPosition: { value: [0, 0, 5], step: 0.1 },
 	});*/
- 
+
 	const { gl, camera, scene, size } = useThree();
 	//camera.position.set(-50, 90, 150)
 	//camera.far = cam.far;
 	// @ts-ignore
 	///camera.fov = cam.fov;
-	// @ts-ignore 
-	camera.aspect=window.innerWidth/window.innerHeight;
+	// @ts-ignore
+	camera.aspect = window.innerWidth / window.innerHeight;
 
 	camera.updateProjectionMatrix();
 
 	return (
 		<OrbitControls
-		maxPolarAngle={Math.PI / 2} 
-        minPolarAngle={Math.PI / 2}
+			maxPolarAngle={Math.PI / 2}
+			minPolarAngle={Math.PI / 2}
 			makeDefault
-			args={[camera, gl.domElement]} 
+			args={[camera, gl.domElement]}
 		/>
 	);
 };

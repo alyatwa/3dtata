@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 
 const Layout = () => {
-	const match = useMatch("/classes/:classId/:moduleId");
+	const match = useMatch("/classes/:classId/:lessonId");
 	return (
 		<>
 			{!match ? (

@@ -1,23 +1,42 @@
 {
-    "compilerOptions": {
-      "target": "ESNext",
-      "useDefineForClassFields": true,
-      "lib": ["DOM", "DOM.Iterable", "ESNext"],
-      "allowJs": false,
-      "skipLibCheck": true,
-      "allowSyntheticDefaultImports": true,
-      "strict": true,
-      "esModuleInterop": true,
-      "forceConsistentCasingInFileNames": true,
-      "module": "ESNext",
-      "moduleResolution": "Node",
-      "types": [
-        "three","vite-plugin-glsl/ext"
-    ],
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "noEmit": true,
-      "jsx": "react-jsx"
+  "compilerOptions": {
+    "target": "ESNext",
+    "paths": {
+      "@/*": ["./src/*"]
     },
-    "include": ["src"]
-  }
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "types": ["three", "vite-plugin-glsl/ext", "mdx"],
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "incremental": true
+  },
+  "presets": ["next/babel"],
+  "exclude": ["./node_modules"],
+  "include": [
+    "middleware.ts",
+    "**/*.tsx",
+    "**/*.ts",
+    "./dist/types/**/*.ts",
+    "src",
+    "src/**/*.d.ts",
+    "./next-env.d.ts",
+    "src/types/additional.d.ts",
+    ".next/types/**/*.ts"
+  ]
+}

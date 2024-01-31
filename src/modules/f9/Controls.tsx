@@ -1,3 +1,4 @@
+"use client";
 import {
 	CameraShake,
 	OrbitControls,
@@ -9,25 +10,29 @@ import { useControls } from "leva";
 import { Ref, useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const Controls = ({target}:{target: THREE.Vector3}) => {
+const Controls = ({ target }: { target: THREE.Vector3 }) => {
 	const { gl, scene, size, camera: _camera } = useThree();
 
 	const camRef = useRef<THREE.OrthographicCamera>();
 
-	const cam = useControls("Camera", {
-		far: { value: 41000, min: 10, max: 50000, step: 1000 },
-		fov: { value: 110, min: 0, max: 300, step: 10 },
-		maxDistance: { value: 40000, min: 0, max: 50000, step: 1000 },
-		minDistance: { value: 3, min: 0, max: 300, step: 10 },
-		near: { value: 1, min: 0, max: 100, step: 0.5 },
-		alpha: { value: 25000, min: 10, max: 50000, step: 1000 },
-		beta: { value: 0, min: 10, max: 50000, step: 1000 },
-		gamma: { value: 0, min: 10, max: 50000, step: 1000 },
-		
-		zoom: { value: 0.02, min: 0, max: 0.2, step: 0.005 },
-		lockCamZ: { value: true },
-		//cameraPosition: { value: [0, 0, 5], step: 0.1 },
-	},{collapsed:true});
+	const cam = useControls(
+		"Camera",
+		{
+			far: { value: 41000, min: 10, max: 50000, step: 1000 },
+			fov: { value: 110, min: 0, max: 300, step: 10 },
+			maxDistance: { value: 40000, min: 0, max: 50000, step: 1000 },
+			minDistance: { value: 3, min: 0, max: 300, step: 10 },
+			near: { value: 1, min: 0, max: 100, step: 0.5 },
+			alpha: { value: 25000, min: 10, max: 50000, step: 1000 },
+			beta: { value: 0, min: 10, max: 50000, step: 1000 },
+			gamma: { value: 0, min: 10, max: 50000, step: 1000 },
+
+			zoom: { value: 0.02, min: 0, max: 0.2, step: 0.005 },
+			lockCamZ: { value: true },
+			//cameraPosition: { value: [0, 0, 5], step: 0.1 },
+		},
+		{ collapsed: true }
+	);
 
 	const camera = camRef.current as THREE.OrthographicCamera;
 	if (camRef.current) {
@@ -43,7 +48,7 @@ const Controls = ({target}:{target: THREE.Vector3}) => {
 	}
 	return (
 		<>
-			<OrbitControls 
+			<OrbitControls
 				target={target as any}
 				/* onChange={()=>console.log(_camera.zoom)} */
 				position={[cam.alpha, cam.beta, cam.gamma]}
@@ -57,7 +62,7 @@ const Controls = ({target}:{target: THREE.Vector3}) => {
 				minAzimuthAngle={THREE.MathUtils.degToRad(90)}
 				maxAzimuthAngle={THREE.MathUtils.degToRad(90)}
 			/>
-		 <OrthographicCamera
+			<OrthographicCamera
 				makeDefault
 				name="ortho"
 				top={window.innerHeight / 2}
@@ -68,7 +73,7 @@ const Controls = ({target}:{target: THREE.Vector3}) => {
 				far={cam.far}
 				zoom={cam.zoom}
 				position={[cam.alpha, cam.beta, cam.gamma]}
-			/> 
+			/>
 			{/* <PerspectiveCamera	
 				makeDefault
 				name="perspective"
