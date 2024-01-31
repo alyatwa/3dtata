@@ -26,12 +26,12 @@ export default async function Page({
   const breadcrumbs = [
     { title: AR.home, link: "/" },
     {
-      title: post.primary_tag?.name,
-      link: "/classes/" + post.primary_tag?.slug,
+      title: post?.primary_tag?.name,
+      link: "/classes/" + post?.primary_tag?.slug,
     },
     {
       title: post.title,
-      link: "/classes/" + post.primary_tag?.slug + "/" + post.slug,
+      link: "/classes/" + post?.primary_tag?.slug + "/" + post.slug,
     },
   ];
   return (

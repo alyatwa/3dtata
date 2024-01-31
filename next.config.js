@@ -26,7 +26,7 @@ const nextConfig = {
 
   images: { unoptimized: true },
   pageExtensions: ["jsx", "tsx", "ts"],
-  output: "export", // Outputs a Single-Page Application (SPA)
+  output: undefined, // Outputs a Single-Page Application (SPA)
   distDir: "./dist", // Changes the output directory `./dist/`
   basePath: process.env.NEXT_PUBLIC_BASE_PATH,
   typescript: {

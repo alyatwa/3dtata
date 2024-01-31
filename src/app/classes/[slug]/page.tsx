@@ -27,7 +27,7 @@ export default async function IndexPage({
   const posts = ((await getPostsByTag(slug)) ?? []) as PostsOrPages;
   const breadcrumbs = [
     { title: AR.home, link: "/" },
-    { title: posts[0].primary_tag?.name, link: "/classes/" + slug },
+    { title: posts[0]?.primary_tag?.name ?? "", link: "/classes/" + slug },
   ];
   return (
     <UserLayout tag={"classes"} breadcrumbs={breadcrumbs}>
