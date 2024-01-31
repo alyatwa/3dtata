@@ -19,10 +19,7 @@ const ContentPage = ({
 }: {
   params: { lesson: string; classslug: string };
 }) => {
-  const ClientContent = dynamic(
-    () => import("./canvas"),
-    { ssr: false } // This option will only render the component on the client-side
-  );
+  const ClientContent = dynamic(() => import("./canvas"), { ssr: false });
   return <ClientContent lesson={lesson} />;
 };
 export default ContentPage;
