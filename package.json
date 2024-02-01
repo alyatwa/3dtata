@@ -9,7 +9,6 @@
       "autoprefixer": {}
     }
   },
-  "name": "web",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
