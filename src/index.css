@@ -16,8 +16,9 @@ body {
   padding: 0;
 }
 iframe {
-  @apply w-full h-[500px];
+  @apply w-full aspect-[2.6];
 }
+
 canvas {
   background: linear-gradient(180deg, #e6eaf5 0%, #f6f6f6 80%);
 }
