@@ -42,7 +42,7 @@ export default async function Page({
         <div className="flex items-center justify-center flex-col gap-3">
           <Image
             src={post.feature_image ?? ""}
-            className="rounded-2xl my-2"
+            className="rounded-2xl my-2 h-[450px]"
             width={500}
             height={450}
             alt={post.feature_image_alt ?? ""}

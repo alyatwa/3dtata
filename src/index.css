@@ -18,7 +18,17 @@ body {
 iframe {
   @apply w-full aspect-[2.6];
 }
-
+.prose > p > a {
+  @apply text-xs;
+}
+figcaption {
+  font-size: 14px;
+  margin-top: 0;
+  text-align: center;
+}
+figure {
+  @apply inline-flex flex-col;
+}
 canvas {
   background: linear-gradient(180deg, #e6eaf5 0%, #f6f6f6 80%);
 }
