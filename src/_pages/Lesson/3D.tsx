@@ -1,10 +1,10 @@
 import React, {
-	useRef,
-	useEffect,
-	lazy,
-	useMemo,
-	useState,
-	Suspense,
+  useRef,
+  useEffect,
+  lazy,
+  useMemo,
+  useState,
+  Suspense,
 } from "react";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
@@ -33,65 +33,68 @@ extend({ OrbitControls });
 	},
 }); */
 
-export default function ThreeDLesson({currentLesson, _class}:{_class:any; currentLesson:any}) {
-	const { isCanvasLoading } = useSnapshot(state);
-    
-	
-	const ModelGLB = lazy(
-		() => import(`../../modules/${currentLesson!.moduleSource}/index.tsx`)
-	);
+export default function ThreeDLesson({
+  currentLesson,
+  _class,
+}: {
+  _class: any;
+  currentLesson: any;
+}) {
+  const { isCanvasLoading } = useSnapshot(state);
 
-	const optionsCam = useMemo(() => {
-		return { x: 10, y: 10, z: 10 };
-	}, []);
-	const optionsModel = useMemo(() => {
-		return { x: 0, y: -12, z: 2 };
-	}, []);
+  const ModelGLB = lazy(
+    () => import(`../../modules/${currentLesson!.moduleSource}/index.tsx`)
+  );
 
-	function Effect() {
-		const { gl, scene, camera } = useThree();
-		const BlurEffect = new BlurFX(gl, scene, camera);
-		return useFrame((state) => {
-			BlurEffect.render();
-		}, 1);
-	}
+  const optionsCam = useMemo(() => {
+    return { x: 10, y: 10, z: 10 };
+  }, []);
+  const optionsModel = useMemo(() => {
+    return { x: 0, y: -12, z: 2 };
+  }, []);
 
-	return (
-		<div>
-			<Leva
-				collapsed={true} // default = false, when true the GUI is collpased
-				hidden={false} // default = false, when true the GUI is hidden
-			/>
-			{isCanvasLoading && (
-				<div className="z-10 absolute flex justify-center items-center w-full h-full bg-white">
-					<Spinner />
-				</div>
-			)}
-			<div className="w-full h-full absolute t-0 l-0">
-				<Canvas
-					gl={{
-						outputEncoding: THREE.LinearEncoding,
-						antialias: true,
-						pixelRatio: 2,
-						//physicallyCorrectLights: true,
-						autoClear: false,
-						toneMapping: THREE.NoToneMapping,
-					}}
-				>
-					<color attach="background" args={[0xffffff]} />
-					<Suspense fallback={null}>
-						<ModelGLB receiveShadow castShadow />
-					</Suspense>
+  function Effect() {
+    const { gl, scene, camera } = useThree();
+    const BlurEffect = new BlurFX(gl, scene, camera);
+    return useFrame((state) => {
+      BlurEffect.render();
+    }, 1);
+  }
 
-				 
-					<Environment files="../../venice_sunset_1k.hdr" />
-				</Canvas>
-			</div>
+  return (
+    <div>
+      <Leva
+        collapsed={true} // default = false, when true the GUI is collpased
+        hidden={false} // default = false, when true the GUI is hidden
+      />
+      {isCanvasLoading && (
+        <div className="z-10 absolute flex justify-center items-center w-full h-full bg-white">
+          <Spinner />
+        </div>
+      )}
+      <div className="w-full h-full absolute t-0 l-0">
+        <Canvas
+          gl={{
+            outputEncoding: THREE.LinearEncoding,
+            antialias: true,
+            pixelRatio: 2,
+            //physicallyCorrectLights: true,
+            autoClear: false,
+            toneMapping: THREE.NoToneMapping,
+          }}
+        >
+          <color attach="background" args={[0xffffff]} />
+          <Suspense fallback={null}>
+            <ModelGLB receiveShadow castShadow />
+          </Suspense>
 
-			<div>
-				<Panel metadata={currentLesson} course={_class} />
-				
-			</div>
-		</div>
-	);
+          <Environment files="../../venice_sunset_1k.hdr" />
+        </Canvas>
+      </div>
+
+      <div>
+        <Panel metadata={currentLesson} course={_class} />
+      </div>
+    </div>
+  );
 }

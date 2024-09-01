@@ -96,21 +96,27 @@ export default class Resources extends EventEmitter {
   /**
    * Load
    */
-  load(_resources: { source: any; name: string; type: string }[] = []) {
+  load(
+    _resources: { source: { src: string }; name: string; type: string }[] = []
+  ) {
     console.log(_resources);
     if (_resources) {
-      for (const _resource of _resources) {
+      for (let _resource of _resources) {
         this.toLoad++;
-        const extensionMatch = (
-          _resource.source?.src ?? _resource.source
-        ).match(/\.([a-z]+)$/);
+        const extensionMatch =
+          (_resource.source?.src ?? _resource.source).match(/\.([a-z]+)$/) ??
+          [];
 
         if (typeof extensionMatch[1] !== "undefined") {
           const extension = extensionMatch[1];
           const loader = this.loaders?.find((_loader) =>
             _loader.extensions.find((_extension) => _extension === extension)
           );
-
+          if (_resource.source.src) {
+            // @ts-ignore
+            _resource.source = _resource.source.src;
+          }
+          console.log(_resource);
           if (loader) {
             loader.action(_resource);
           } else {

@@ -15,6 +15,7 @@ import { Leva } from "leva";
 import { useSnapshot } from "valtio";
 import { Spinner } from "@nextui-org/react";
 import { state } from "@/context/panel-proxy";
+import Panel from "@/components/Panel";
 //import ModelGLB from "@/modules/earth-gl";
 
 extend({ OrbitControls });
@@ -29,7 +30,7 @@ export default function CanvasPage({ lesson }: { lesson: string }) {
         collapsed={true} // default = false, when true the GUI is collpased
         hidden={true} // default = false, when true the GUI is hidden
       />
-      {isCanvasLoading && (
+      {false && (
         <div className="z-10 absolute flex justify-center items-center w-full h-full bg-white">
           <Spinner />
         </div>
@@ -53,6 +54,8 @@ export default function CanvasPage({ lesson }: { lesson: string }) {
           <Environment files="../../venice_sunset_1k.hdr" />
         </Canvas>
       </div>
+      
+       
     </div>
   );
 }

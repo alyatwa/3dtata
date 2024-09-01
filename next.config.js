@@ -29,6 +29,9 @@ const nextConfig = {
   output: undefined, // Outputs a Single-Page Application (SPA)
   //distDir: "./dist", // Changes the output directory `./dist/`
   basePath: process.env.NEXT_PUBLIC_BASE_PATH,
+  publicRuntimeConfig: {
+    basePath: process.env.BASE_PATH || "", // Use an environment variable or default to an empty string
+  },
   typescript: {
     //ignoreBuildErrors: true,
   },

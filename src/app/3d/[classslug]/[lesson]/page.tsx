@@ -2,7 +2,10 @@ import dynamic from "next/dynamic";
 
 export async function generateStaticParams() {
   const _class = [
-    { class: "space", lesson: ["earth", "jupiter", "solar-system", "f9"] },
+    {
+      class: "space",
+      lesson: ["earth", "jupiter", "solar-system", "f9", "ahu"],
+    },
     { class: "math", lesson: ["square", "triangle"] },
   ];
 

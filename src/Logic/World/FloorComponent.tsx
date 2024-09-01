@@ -1,5 +1,6 @@
 import { Plane } from "@react-three/drei";
 import { useControls } from "leva";
+import "../Materials/Floor";
 
 export default function FloorComponent() {
   const { topLeftColor, topRightColor, bottomLeftColor, bottomRightColor } =
