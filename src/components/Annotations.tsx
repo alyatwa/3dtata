@@ -32,7 +32,7 @@ const Annotations = memo(
           center
           zIndexRange={[100, 0]}
         >
-          <div className="bg-white/80 truncate backdrop-blur-sm rounded-lg p-2 select-none line-clamp-2 w-[100px] max-h-32 ">
+          <div className="bg-white/80  backdrop-blur-sm rounded-lg p-2 select-none line-clamp-2 w-[100px] max-h-32 ">
             <p className="text-xs text-center">{data[annotation].text}</p>
           </div>
         </Html>
